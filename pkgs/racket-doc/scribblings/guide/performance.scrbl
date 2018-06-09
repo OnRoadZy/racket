@@ -19,8 +19,11 @@ allocating that value cost? While most programmers have a reasonable
 grasp of the cost of various operations and data structures at the
 machine level, the gap between the Racket language model and the
 underlying computing machinery can be quite large.}
-Alan Perlis著名佳句：”Lisp程序员知道一切的价值和虚无的代价（Lisp programmers know the value of
-everything and the cost of nothing）。“一个Racket程序员知道，例如，一个@racket[lambda]程序中的任何地方都会生成一个在词法环境中封闭的值——但是分配这个值要多少代价呢？程序员有一个合理而且必须掌握的在机器的水平的各种操作的成本和数据结构，Racket语言模型和优先计算机械之间的差距可以是相当大的。
+Alan Perlis著名佳句：“Lisp程序员知道一切的价值和虚无的代价（Lisp programmers know the value of
+everything and the cost of nothing）。”一个Racket程序员知道，例如，
+一个在程序中任何地方的@racket[lambda]都会生成一个在词法环境中封闭的值 —— 但是分配这个值要多少代价呢？
+尽管大多数程序员对机器级别的各种操作和数据结构的成本有合理的把握，
+但Racket语言模型和计算机底层之间的差距可能相当大。
 
 @;{In this chapter, we narrow the gap by explaining details of the
 Racket compiler and run-time system and how they affect the run-time
@@ -42,7 +45,12 @@ the @onscreen{Preserve stacktrace} checkbox is clicked by default,
 which also affects performance. Disabling debugging and stacktrace
 preservation provides performance results that are more consistent
 with running in plain @exec{racket}.}
-默认情况下，用于调试和调试工具的DrRacket工具程序（由@other-doc['(lib "errortrace/scribblings/errortrace.scrbl")]库所提供）能为一些程序显著地降低性能。即使调试在通过@onscreen{Choose Language...}对话框的@onscreen{Show Details（显示详细信息）}面板被禁用，@onscreen{Preserve stacktrace}复选框默认被点击选择，这也会影响性能。禁用调试堆栈保存提供性能结果，它更符合在朴实无华的@exec{racket}中运行。
+默认情况下，DrRacket为所有程序附加调试功能，并且这些调试工具
+（由@other-doc['(lib "errortrace/scribblings/errortrace.scrbl")]库所提供）
+会显著地降低一些程序的性能。即使调试在通过@onscreen{Choose Language...}
+对话框的@onscreen{Show Details（显示详细信息）}面板被禁用，
+@onscreen{Preserve stacktrace}复选框默认被点击选择，这也会影响性能。
+禁用调试和堆栈保存后表现出的性能，更符合单独在@exec{racket}中运行的效果。
 
 @;{Even so, DrRacket and programs developed within DrRacket use the same
 Racket virtual machine, so garbage collection times (see
@@ -53,7 +61,11 @@ plain @exec{racket} instead of in the DrRacket development environment.}
 Non-interactive mode should be used instead of the
 @tech["REPL"] to benefit from the module system. See
 @secref["modules-performance"] for details.}
-即便如此，DrRacket和开发的程序在DrRacket中使用相同的Racket虚拟机，所以在DrRacket的垃圾收集时间（见@secref["gc-perf"]）可能会比程序本身运行时间更长，同时DrRacket线程可能妨碍程序线程的执行。@bold{对于一个程序的最可靠的计时结果，是在普通的@exec{racket}中运行而不是在DrRacket开发环境中运行。}对模块的系统的效益来讲非交互式模式应该用来代替@tech["REPL"]。详情请参见@secref["modules-performance"]。
+即便如此，DrRacket和在DrRacket中开发的程序使用相同的Racket虚拟机，
+所以在DrRacket的垃圾收集时间（见@secref["gc-perf"]）可能会比程序本身运行时间更长，
+同时DrRacket线程可能妨碍程序线程的执行。
+@bold{对于一个程序的最可靠的计时结果，是在普通的@exec{racket}中运行而不是在DrRacket开发环境中运行。}
+以从模块系统中受益，应使用非交互式模式代替@tech["REPL"]。详情请参见@secref["modules-performance"]。
 
 @; ----------------------------------------------------------------------
 
@@ -69,15 +81,21 @@ program. (Most of the time required to compile a file is actually in
 macro expansion; generating bytecode from fully expanded code is
 relatively fast.) See @secref["compile"] for more information on
 generating bytecode files.}
-将要被Racket求值的每个定义或表达式都编译成一个内部字节码格式。在交互模式下，这种编译是自动进行并且快速。同时，@exec{raco make}和@exec{raco setup}这样的工具将编译的字节码编组到一个文件中，因此你不必每次你运行一个程序时从源代码中编译。（被需要去编译一个文件的大部分时间实际上是处于宏扩展中；完全展开的代码生成的字节码是比较快的。）参见@secref["compile"]获取生成字节码文件的更多信息。
+每个将要被Racket求值的定义或表达式都被编译成一个内部字节码格式。
+在交互模式下，这种编译是自动并即时进行。
+同时，@exec{raco make}和@exec{raco setup}这样的工具将编译的字节码编组到一个文件中，
+因此你每次运行一个程序时不必从源代码编译。
+（编译一个文件的大部分时间实际上花费在宏扩展；从完全展开的代码生成的字节码是比较快的。）
+参见@secref["compile"]获取生成字节码文件的更多信息。
 
 @;{The bytecode compiler applies all standard optimizations, such as
 constant propagation, constant folding, inlining, and dead-code
 elimination. For example, in an environment where @racket[+] has its
 usual binding, the expression @racket[(let ([x 1] [y (lambda () 4)]) (+
 1 (y)))] is compiled the same as the constant @racket[5].}
-字节码编译器应用所有标准的优化，比如常量传输、常量折叠、内联，和死代码消除。例如，在一个@racket[+]有其通常的绑定的环境中，表达式@racket[(let ([x 1] [y (lambda () 4)]) (+
-1 (y)))]被编译成常量 @racket[5]。
+字节码编译器应用所有标准的优化，比如常量传输、常量折叠、内联，和死代码消除。
+例如，在一个@racket[+]有其通常绑定的环境中，
+表达式@racket[(let ([x 1] [y (lambda () 4)]) (+ 1 (y)))]被编译成常量@racket[5]。
 
 @;{On some platforms, bytecode is further compiled to native code via a
 @deftech{just-in-time} or @deftech{JIT} compiler. The @tech{JIT}
@@ -87,7 +105,10 @@ numbers. Currently, @tech{JIT} compilation is supported for x86,
 x86_64 (a.k.a. AMD64), ARM, and 32-bit PowerPC processors. The @tech{JIT}
 compiler can be disabled via the @racket[eval-jit-enabled] parameter
 or the @DFlag{no-jit}/@Flag{j} command-line flag for @exec{racket}.}
-在一些平台上，字节码通过一个@deftech{just-in-time}编译器或@tech{JIT}编译器进一步编译成本机代码。JIT编译器充分加快执行紧凑的循环的程序、小整数算法以及不精确实数算法。目前，@tech{JIT}编译支持x86、x86_64（也叫作AMD64）、ARM和32位PowerPC处理器。@tech{JIT}编译器可以通过@racket[eval-jit-enabled]参数或者@DFlag{no-jit}/@Flag{j}命令行标志的@exec{racket}禁用。
+在一些平台上，字节码通过一个@deftech{just-in-time}编译器或者说@deftech{JIT}编译器进一步编译成本机代码。
+@tech{JIT}编译器充分加快执行紧凑的循环的程序、小整数算法以及不精确实数算法。
+目前，@tech{JIT}编译支持x86、x86_64（也叫作AMD64）、ARM和32位PowerPC处理器。
+@tech{JIT}编译器可以通过@exec{racket}的@racket[eval-jit-enabled]参数或者@DFlag{no-jit}/@Flag{j}命令行标志禁用。
 
 @;{The @tech{JIT} compiler works incrementally as functions are applied,
 but the @tech{JIT} compiler makes only limited use of run-time
@@ -97,7 +118,9 @@ module body or @racket[lambda] abstraction is compiled only once. The
 not counting the bodies of any lexically nested procedures. The
 overhead for @tech{JIT} compilation is normally so small that it is
 difficult to detect.}
-@tech{JIT}编译器随着函数的应用逐步地工作，但是@tech{JIT}编译器在编译过程时只对运行时信息进行有限的使用，因为给定的模块主体或@racket[lambda]抽象只编译一次。@tech{JIT}的编译的粒度是一个单一的程序体，不计算任何嵌套的程序的主体。@tech{JIT}编译的开销通常很小以致很难检测到。
+@tech{JIT}编译器随着函数被调用逐步地工作，但是@tech{JIT}编译器在编译过程时只对运行时信息进行有限的使用，
+因为给定的模块主体或@racket[lambda]表达式的代码只编译一次。@tech{JIT}的编译的粒度是单个的程序体，
+不包含任何嵌套的程序的主体。@tech{JIT}编译的开销通常很小以致很难检测到。
 
 @; ----------------------------------------------------------------------
 
@@ -112,13 +135,18 @@ In contrast, in a traditional interactive Scheme system, the top-level
 @racket[+] binding might be redefined, so the compiler cannot assume a
 fixed @racket[+] binding (unless special flags or declarations
 are used to compensate for the lack of a module system).}
-模块系统通过帮助确保标识符具有通常的绑定来帮助优化。那是，通过@racketmodname[racket/base]提供的@racket[+]可由编译器辨别并内联，这对@tech{JIT}编译的代码是特别重要的。相反，在一个传统的交互式Scheme系统中，顶层的@racket[+]绑定可能被重新定义，因此编译器不能假定一个固定的@racket[+]绑定（除非特殊的标志或声明用于弥补模块系统的不足）。
+模块系统通过帮助确保标识符具有通常的绑定来帮助优化。
+那是，@racketmodname[racket/base]提供的@racket[+]可由编译器辨别并内联，
+这对@tech{JIT}编译的代码是特别重要的。相反，在一个传统的交互式Scheme系统中，
+顶层的@racket[+]绑定可能被重新定义，因此编译器不能假定一个固定的@racket[+]绑定（除非使用特殊的标志或声明来弥补模块系统的缺乏）。
 
 @;{Even in the top-level environment, importing with @racket[require]
 enables some inlining optimizations. Although a @racket[+] definition
 at the top level might shadow an imported @racket[+], the shadowing
 definition applies only to expressions evaluated later.}
-即使在顶级环境中，带@racket[require]的导入使一些内联优化成为可能。尽管一个在顶层的@racket[+]定义可能会对覆盖一个导入的@racket[+]，但覆盖定义只适用于稍后求值的表达式。
+即使在顶级环境中，带@racket[require]的导入使一些内联优化成为可能。
+尽管一个在顶层的@racket[+]定义可能会对覆盖一个导入的@racket[+]，
+但覆盖定义只适用于稍后求值的表达式。
 
 @;{Within a module, inlining and constant-propagation optimizations take
 additional advantage of the fact that definitions within a module
@@ -130,14 +158,18 @@ exploration. The @racket[compile-enforce-module-constants] parameter
 disables the @tech{JIT} compiler's assumptions about module
 definitions when interactive exploration is more important. See
 @secref["module-set"] for more information.}
-在模块中，内联和常数传输优化采取额外的优势，在模块中不能定义可以突变时没有@racket[set!]在编译时可见。此类优化在顶层环境中不可用。虽然模块内的优化对性能很重要，但它阻碍了一些交互开发和探索的形式。当交互探索更重要时，@racket[compile-enforce-module-constants]参数禁用@tech{JIT}编译器关于模块定义的假设。有关更多信息，请参阅@secref["module-set"]。
+在模块中，内联和常数传输优化采取额外的优势，因为模块中的定义无法改变值如果在编译时没有可见的@racket[set!]。
+此类优化在顶层环境中不可用。虽然模块内的优化对性能很重要，但它也阻碍了一些交互式开发和探索的形式。
+当交互式探索更重要时，@racket[compile-enforce-module-constants]参数禁用@tech{JIT}编译器关于模块定义的假设。
+有关更多信息，请参阅@secref["module-set"]。
 
 @;{The compiler may inline functions or propagate constants across module
 boundaries. To avoid generating too much code in the case of function
 inlining, the compiler is conservative when choosing candidates for
 cross-module inlining; see @secref["func-call-performance"] for
 information on providing inlining hints to the compiler.}
-编译器可以内联函数或在模块边界上传播常量。为了避免在内联函数的情况下产生了太多的代码，编译器是保守的跨模块内联选择候选人；看到函数调用的优化提供给编译器内联提示信息。
+编译器可以内联函数或在模块边界上传播常量。为了避免在内联函数的情况下产生了太多的代码，
+编译器会很保守地选择跨模块内联的候选人；参阅@secref["func-call-performance"]以了解更多关于提供给编译器的内联提示信息。
 
 @;{The later section @secref["letrec-performance"] provides some
 additional caveats concerning inlining of module bindings.}
@@ -151,7 +183,7 @@ additional caveats concerning inlining of module bindings.}
 @;{When the compiler detects a function call to an immediately visible
 function, it generates more efficient code than for a generic call,
 especially for tail calls. For example, given the program}
-当编译器检测到一个对即时可见函数的函数调用时，它生成的代码比一般调用更高效，尤其是对于尾部调用。例如，给定程序
+当编译器检测到一个对即时可见函数的调用时，它生成的代码比一般调用更高效，尤其对于尾部调用。例如，给定程序
 
 @racketblock[
 (letrec ([odd (lambda (x) 
@@ -168,12 +200,12 @@ especially for tail calls. For example, given the program}
 @;{the compiler can detect the @racket[odd]--@racket[even] loop and
 produce code that runs much faster via loop unrolling and related
 optimizations.}
-编译器可以检测@racket[odd]--@racket[even]循环并通过循环展开和相关的优化产生运行速度更快的代码。
+编译器可以检测到@racket[odd]--@racket[even]循环并通过循环展开和相关的优化产生运行速度更快的代码。
 
 @;{Within a module form, @racket[define]d variables are lexically scoped
 like @racket[letrec] bindings, and definitions within a module
 therefore permit call optimizations, so}
-在一个模块表里，@racket[define]变量是像@racket[letrec]绑定这样的词法作用域，并且定义在一个模块内因此允许调用优化，那么
+在一个模块表里，@racket[define]声明的变量有像@racket[letrec]绑定这样的词法作用域，并且在一个模块内的定义因此允许调用优化，那么
 
 @racketblock[
 (define (odd x) ....)
@@ -181,14 +213,15 @@ therefore permit call optimizations, so}
 ]
 
 @;{within a module would perform the same as the @racket[letrec] version.}
-其中一个模块可以执行相同的@racket[letrec]版本。
+在一个模块中的运行效果和@racket[letrec]的版本相同。
 
 @;{For direct calls to functions with keyword arguments, the compiler can
 typically check keyword arguments statically and generate a direct
 call to a non-keyword variant of the function, which reduces the
 run-time overhead of keyword checking. This optimization applies only
 for keyword-accepting procedures that are bound with @racket[define].}
-对于带有关键字参数的函数的直接调用，编译器通常可以静态检查关键字参数并生成一个对函数非关键字变体的直接调用，从而减少关键字检查的运行时开销。此优化仅适用于用@racket[define]绑定的接受关键字的过程。
+对于带有关键字参数的函数的直接调用，编译器通常可以静态检查关键字参数并生成一个对函数非关键字变体的直接调用，
+从而减少关键字检查的运行时开销。此优化仅适用于用@racket[define]绑定的接受关键字的程序。
 
 @;{For immediate calls to functions that are small enough, the compiler
 may inline the function call by replacing the call with the body of
@@ -202,13 +235,18 @@ only trivial functions are considered candidates for cross-module
 inlining, but a programmer can wrap a function definition with
 @racket[begin-encourage-inline] to encourage inlining
 of the function.}
-对于对足够小的函数的即时调用，编译器可以通过函数的主体替换调用来内联函数调用。除了目标函数体的大小之外，编译器的启发式考虑量已经进行内联调用站点上是否被调用函数本身调用其他比简单的基本操作函数。当一个模块被编译，在模块级定义一些函数确定为内联到其他模块的候选人；通常情况下，只有微不足道的功能被认为是跨模块内嵌的候选人，但程序员可以把函数定义开始鼓励鼓励内联内联函数。
+对于对足够小的函数的即时调用，编译器可以通过替换函数的主体成调用来内联函数调用。
+除了目标函数体的大小之外，编译器也考虑了在调用位置已经执行的内联的数量以及被调用函数本身是否调用除简单基本操作之外的函数。
+当一个模块被编译时，在模块层面定义的一些函数被确定为内联到其他模块的候选人；
+通常情况下，只有较小的函数被认为是跨模块内联的候选人，
+但开发者可以把函数定义在@racket[begin-encourage-inline]内来促进函数内联。
 
 @;{Primitive operations like @racket[pair?], @racket[car], and
 @racket[cdr] are inlined at the machine-code level by the @tech{JIT}
 compiler. See also the later section @secref["fixnums+flonums"] for
 information about inlined arithmetic operations.}
-像@racket[pair?]、@racket[car]和@racket[cdr]这样的原始操作是在机器代码级被@tech{JIT}编译器内联。参见后面的章节@secref["fixnums+flonums"]获取关于内联的算术运算的信息。
+像@racket[pair?]、@racket[car]和@racket[cdr]这样的基础操作是在机器代码级被@tech{JIT}编译器内联。
+参见后面的章节@secref["fixnums+flonums"]获取关于内联的算术运算的信息。
 
 @; ----------------------------------------------------------------------
 
