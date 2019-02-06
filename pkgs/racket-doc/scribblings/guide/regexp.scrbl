@@ -60,7 +60,6 @@ character that would need escaping inside a Racket string is
 当我们想要在一个Racket字符串或正则表达式原义里的一个字面原义的@litchar{\}，我们必须将它转义以便它出现在所有字符串中。Racket字符串使用@litchar{\}作为转义字符，所以我们用两个@litchar{\}结束：一个Racket字符串@litchar{\}转义正则表达式@litchar{\}，它接着转义@litchar{.}。另一个将要在Racket字符串里转义的字符是@litchar{"}。
 }
 
-@;?????????????????????????????????????????????????????????????????????
 If we needed to match the character @litchar{.} itself, we can escape
 it by precede it with a @litchar{\}.  The character sequence
 @litchar{\.} is thus a @tech{metasequence}, since it doesn't match
@@ -68,7 +67,7 @@ itself but rather just @litchar{.}.  So, to match @litchar{a},
 @litchar{.}, and @litchar{c} in succession, we use the regexp pattern
 @racket[#rx"a\\.c"]; the double @litchar{\} is an artifact of Racket
 strings, not the @tech{regexp} pattern itself.
-如果我们需要匹配字符@litchar{.}本身，我们可以在它前面加上一个@litchar{\}。字符序列@litchar{\.}结果就是一个@tech{元序列（metasequence）}，因为它不匹配它本身而只是@litchar{.}。所以，在继承里匹配@litchar{a}、@litchar{.}和@litchar{c}，我们使用正则表达式模@racket[#rx"a\\.c"]。双@litchar{\}字符是一个Racket字符串神器，它不是@tech{正则表达式（regexp）}模式自己的。
+如果我们需要匹配字符@litchar{.}本身，我们可以在它前面加上一个@litchar{\}来转义。字符序列@litchar{\.}就是一个@tech{元序列（metasequence）}，因为它不匹配它本身而只是@litchar{.}。所以，连续匹配@litchar{a}、@litchar{.}和@litchar{c}，我们使用正则表达式模@racket[#rx"a\\.c"]。双@litchar{\}字符是一个Racket字符串技巧，不是@tech{正则表达式}模式本身。
 
 @;{The @racket[regexp] function takes a string or byte string and
 produces a @tech{regexp} value. Use @racket[regexp] when you construct
@@ -77,7 +76,7 @@ compiled to a @tech{regexp} value before it can be used in a match.
 The @racket[pregexp] function is like @racket[regexp], but using the
 extended syntax. Regexp values as literals with @litchar{#rx} or
 @litchar{#px} are compiled once and for all when they are read.}
-@racket[regexp-quote]函数接受一个字符串或字节字符串并产生一个@tech{正则表达式（regexp）}值。当你使用@racket[regexp]构建模式以匹配多个字符串，因为一个模式在它可以被使用在一个匹配之前被编译成了一个@tech{正则表达式（regexp）}值。这个@racket[pregexp]函数就像@racket[regexp]，但使用扩展语法。尽管当它们可读，作为带@litchar{#rx}或@litchar{#px}的字面形式的正则表达式值被编译一次。
+@racket[regexp-quote]函数接受一个字符串或字节字符串并产生一个@tech{正则表达式}值。当你构建一个模式来匹配多个字符串时用@racket[regexp]，因为一个模式在它可以被用在一个匹配之前被编译成了一个@tech{正则表达式}值。这个@racket[pregexp]函数类似于@racket[regexp]，除了使用扩展语法之外。正则表达式值作为带@litchar{#rx}或@litchar{#px}的字面形式被编译一次并且当它们被读取时都这样。
 
 @;{The @racket[regexp-quote] function takes an arbitrary string and
 returns a string for a pattern that matches exactly the original
@@ -94,7 +93,7 @@ safely match only themselves.}
 
 @;{The @racket[regexp-quote] function is useful when building a composite
 @tech{regexp} from a mix of @tech{regexp} strings and verbatim strings.}
-@racket[regexp-quote]函数在从一个混合的@tech{正则表达式（regexp）}字符串和字面的字符串构建一个完整的@tech{正则表达式（regexp）}是有用的。
+@racket[regexp-quote]函数在从一个混合的@tech{正则表达式}字符串和字面的字符串构建一个完整的@tech{正则表达式}是有用的。
 
 @; ----------------------------------------
 
@@ -106,7 +105,7 @@ pattern and a @tech{text string}, and it returns a match if the regexp
 matches (some part of) the @tech{text string}, or @racket[#f] if the regexp
 did not match the string. A successful match produces a list of
 @deftech{index pairs}.}
-@racket[regexp-match-positions]函数接受一个@tech{正则表达（regexp）}模式和一个@tech{文本字符串（text string）}，如果正则表达式匹配（某部分）@tech{文本字符串（text string）}则返回一个匹配，或如果正则表达式不匹配字符串则返回@racket[#f]。成功匹配生成一个@deftech{索引配对（index pairs）}列表。
+@racket[regexp-match-positions]函数接受一个@tech{正则表达}模式和一个@tech{文本字符串}，如果这个正则表达式匹配（某部分）这个@tech{文本字符串}则返回一个匹配，或这如果这个正则表达式不匹配这个字符串则返回@racket[#f]。一个成功的匹配产生一个@deftech{索引配对（index pairs）}列表。
 
 @examples[
 #:eval rx-eval
@@ -118,7 +117,7 @@ did not match the string. A successful match produces a list of
 identify the substring that was matched. The @racket[4] is the
 starting (inclusive) index, and @racket[10] the ending (exclusive)
 index of the matching substring:}
-在第二个例子中，整数@racket[4]和@racket[10]确定匹配的子串。@racket[4]是起始（包含）索引，@racket[10]是匹配子字符串的结尾（不包含）索引：
+在第二个例子中，整数@racket[4]和@racket[10]确定匹配的子串。这个@racket[4]是起始（包含）索引，同时这个@racket[10]是匹配子字符串的结尾（不包含）索引：
 
 @interaction[
 #:eval rx-eval
@@ -130,12 +129,12 @@ contains only one index pair, and that pair represents the entire
 substring matched by the regexp.  When we discuss @tech{subpatterns}
 later, we will see how a single match operation can yield a list of
 @tech{submatch}es.}
-第一个例子中，@racket[regexp-match-positions]的返回列表只包含一个索引对，和这索引对代表由正则表达式匹配整个字符串。当我们论述了@tech{子模式（subpatterns）}后，我们将看到一个匹配操作可以产生一个列表的@tech{子匹配（submatch）}。
+第一个例子中，@racket[regexp-match-positions]的返回列表只包含一个索引配对，并且那个索引配对代表由正则表达式匹配整个字符串。当我们论述了@tech{子模式（subpatterns）}后，我们将明白为什么一个单独的匹配操作可以产生一个@tech{子匹配（submatch）列表}。
 
 @;{The @racket[regexp-match-positions] function takes optional third and
 fourth arguments that specify the indices of the @tech{text string} within
 which the matching should take place.}
-@racket[regexp-match-positions]函数需要可选第三和第四个参数指定的@tech{文本字符串（text string）}的匹配应该发生的指标。
+@racket[regexp-match-positions]函数接受可选的第三和第四个参数，他们在这个匹配应该发生之中指定@tech{文本字符串}的指标。
 
 @interaction[
 #:eval rx-eval
@@ -147,12 +146,12 @@ which the matching should take place.}
 
 @;{Note that the returned indices are still reckoned relative to the full
 @tech{text string}.}
-注意，返回的索引仍然与全@tech{文字符串（text string）}相对应。
+注意，返回指标仍然与完整的@tech{文字符串}相对应。
 
 @;{The @racket[regexp-match] function is like
 @racket[regexp-match-positions], but instead of returning index pairs,
 it returns the matching substrings:}
-@racket[regexp-match]函数类似于@racket[regexp-match-positions]，但它不是返回索引对，它返回匹配的子字符串：
+@racket[regexp-match]函数类似于@racket[regexp-match-positions]，但它不是返回索引配对，它返回这个匹配的子字符串：
 
 @interaction[
 #:eval rx-eval
@@ -162,7 +161,7 @@ it returns the matching substrings:}
 
 @;{When @racket[regexp-match] is used with byte-string regexp, the result
 is a matching byte substring:}
-当@racket[regexp-match]使用字节字符串表达式，结果是一个匹配的字节串：
+当@racket[regexp-match]在字节字符串表达式中使用时，结果是一个匹配的字节子字符串：
 
 @interaction[
 #:eval rx-eval
@@ -178,13 +177,13 @@ is a matching byte substring:}
              characters. For maximum efficiency, use byte-string
              matching instead of string, since matching bytes directly
              avoids UTF-8 encodings.}
-一个字节字符串的正则表达式可以被应用到一个字符串，而且一个字符串正则表达式可以应用到一个字节的字符串。在这两种情况下，结果都是一个字节字符串。在内部，所有的正则表达式匹配是以字节为单位，并且一个字符串正则表达式扩展到一个正则表达式，它匹配UTF-8编码的字符。为最大限度地提高效率，使用字节字符串匹配代替字符串，自此匹配字节直接避免了UTF-8编码。 
+一个字节字符串正则表达式可以被应用到一个字符串，而且一个字符串正则表达式可以应用到一个字节字符串。在这两种情况下，结果都是一个字节字符串。在内部，所有的正则表达式匹配是以字节为单位，并且一个字符串正则表达式被扩展到一个匹配字符的UTF-8编码的正则表达式。为最大限度地提高效率，使用字节字符串匹配代替字符串匹配，因为匹配字节直接避开了UTF-8编码。 
 }
 
 @;{If you have data that is in a port, there's no need to first read it
 into a string. Functions like @racket[regexp-match] can match on the
 port directly:}
-如果在端口中有数据，则无需首先将其读取到字符串中。像@racket[regexp-match]函数可以直接匹配端口：
+如果你有在端口中的数据，这里无需首先将其读取到字符串中。像@racket[regexp-match]这样的函数可以在端口上直接匹配：
 
 @interaction[
 (define-values (i o) (make-pipe))
@@ -196,7 +195,7 @@ port directly:}
 @;{The @racket[regexp-match?] function is like
 @racket[regexp-match-positions], but simply returns a boolean
 indicating whether the match succeeded:}
-@racket[regexp-match?]函数类似于@racket[regexp-match-positions]，但只简单地返回一个布尔值，以指示是否匹配成功：
+@racket[regexp-match?]函数类似于@racket[regexp-match-positions]，但只简单地返回一个指示是否匹配成功的布尔值：
 
 @interaction[
 #:eval rx-eval
@@ -208,7 +207,7 @@ indicating whether the match succeeded:}
 @tech{regexp} pattern and a text string, and it returns a list of
 substrings of the text string; the pattern identifies the delimiter
 separating the substrings.}
-@racket[regexp-split]函数有两个参数，一个@tech{正则表达式（regexp）}模式和一个文本字符串，并返回一个文本字符串的子串列表；这个模式识别分隔子字符串的分隔符。
+@racket[regexp-split]函数接受两个参数，一个@tech{正则表达式}模式和一个文本字符串，并返回一个文本字符串的子串列表；这个模式识别分隔子字符串的分隔符。
 
 @interaction[
 #:eval rx-eval
@@ -218,7 +217,7 @@ separating the substrings.}
 
 @;{If the first argument matches empty strings, then the list of all the
 single-character substrings is returned.}
-如果第一个参数匹配空字符串，那么返回所有的单个字符的子字符串列表。
+如果第一个参数匹配空字符串，那么返回所有的单字符子字符串的列表。
 
 @interaction[
 #:eval rx-eval
@@ -227,7 +226,7 @@ single-character substrings is returned.}
 
 @;{Thus, to identify one-or-more spaces as the delimiter, take care to
 use the regexp @racket[#rx"\u20+"], not @racket[#rx"\u20*"].}
-因此，确定一个或多个空格作为分隔符，请注意使用正则表达@racket[#rx"\u20+"]，而不是@racket[#rx"\u20*"]。
+因此，识别一个或多个空格作为分隔符，注意使用正则表达@racket[#rx"\u20+"]，而不是@racket[#rx"\u20*"]。
 
 @interaction[
 #:eval rx-eval
@@ -239,7 +238,7 @@ use the regexp @racket[#rx"\u20+"], not @racket[#rx"\u20*"].}
 the text string by another string.  The first argument is the pattern,
 the second the text string, and the third is either the string to be
 inserted or a procedure to convert matches to the insert string.}
-@racket[regexp-replace]函数用另一个字符串替换文本字符串匹配的部分。第一个参数是模式，第二个参数是文本字符串，第三个参数是要插入的字符串，或者一个将匹配转换为插入字符串的过程。
+@racket[regexp-replace]函数用另一个字符串替换这个文本字符串匹配的部分。第一个参数是模式，第二个参数是文本字符串，第三个参数是要插入的字符串或者一个将匹配转换为插入字符串的过程。
 
 @interaction[
 #:eval rx-eval
@@ -249,11 +248,11 @@ inserted or a procedure to convert matches to the insert string.}
 
 @;{If the pattern doesn't occur in the text string, the returned string
 is identical to the text string.}
-如果该模式没有出现在这个文本字符串中，返回的字符串与文本字符串相同。
+如果该模式没有出现在这个文本字符串中，返回的字符串与这个文本字符串相同。
 
 @;{The @racket[regexp-replace*] function replaces @emph{all} matches in
 the text string by the insert string:}
-@racket[regexp-replace*]函数通过字符串插入代替@emph{所有（all）}在字符串的匹配：
+@racket[regexp-replace*]函数通过这个插入的字符串在这个文本字符串中代替@emph{所有}相匹配的内容：
 
 @interaction[
 #:eval rx-eval
@@ -270,7 +269,7 @@ the text string by the insert string:}
 beginning and the end of the text string, respectively.  They ensure
 that their adjoining regexps match at one or other end of the text
 string:}
-论断@deftech{assertions} @litchar{^}和@litchar{$}分别标识文本字符串的开头和结尾，它们确保对它们临近的一个或其它文本字符串的结束正则表达式匹配：
+这个@deftech{判断（assertions）} @litchar{^}和@litchar{$}分别标识这个文本字符串的开头和结尾。它们确保在文本字符串的一个或其它尾部相邻的正则表达式匹配：
 
 @interaction[
 #:eval rx-eval
@@ -279,7 +278,7 @@ string:}
 
 @;{The @tech{regexp} above fails to match because @litchar{contact} does
 not occur at the beginning of the text string. In}
-以上@tech{正则表达式（regexp）}匹配失败是因为@litchar{contact}没有出现在文本字符串的开始。在
+以上@tech{正则表达式}匹配失败是因为@litchar{contact}没有出现在文本字符串的开头。在
 
 @interaction[
 #:eval rx-eval
@@ -287,11 +286,11 @@ not occur at the beginning of the text string. In}
 ]
 
 @;{the regexp matches the @emph{last} @litchar{laugh}.}
-中，正则表达式匹配的@emph{最后（last）}的@litchar{laugh}。
+中，正则表达式匹配@emph{最后}的@litchar{laugh}。
 
 @;{The metasequence @litchar{\b} asserts that a word boundary exists, but
 this metasequence works only with @litchar{#px} syntax. In}
-元序列@litchar{\b}坚称一个字的范围存在，但这元序列只能与@litchar{#px}语法一起工作。在
+这个元序列@litchar{\b}判断一个字的边界存在，但这个元序列只能与@litchar{#px}语法一起工作。在
 
 @interaction[
 #:eval rx-eval
@@ -300,12 +299,12 @@ this metasequence works only with @litchar{#px} syntax. In}
 
 @;{the @litchar{yack} in @litchar{yackety} doesn't end at a word boundary
 so it isn't matched.  The second @litchar{yack} does and is.}
-里，@litchar{yackety}中的@litchar{yack}不在字边界结束，所以不匹配。第二@litchar{yack}在字边界结束，所以匹配。
+里，@litchar{yackety}中的这个@litchar{yack}不结束于字边界，所以它并不匹配。第二@litchar{yack}在字边界结束，所以匹配。
 
 @;{The metasequence @litchar{\B} (also @litchar{#px} only) has the
 opposite effect to @litchar{\b}; it asserts that a word boundary does
 not exist. In}
-元序列@litchar{\B}（也只有@litchar{#px}）对@litchar{\b}有相反的影响；它断言字边界不存在。在
+元序列@litchar{\B}（也只有@litchar{#px}）对@litchar{\b}有相反的影响；它判断一个字边界不存在。在
 
 @interaction[
 #:eval rx-eval
@@ -313,7 +312,7 @@ not exist. In}
 ]
 
 @;{the @litchar{an} that doesn't end in a word boundary is matched.}
-里，@litchar{an}不在字边界结束，是匹配的。
+里，这个不在一个字边界结束的@litchar{an}被匹配。
 
 @; ----------------------------------------
 
@@ -324,18 +323,19 @@ not exist. In}
 text string.  Sometimes it is necessary or convenient to use a regexp
 @tech{metasequence} to refer to a single character. For example, the
 metasequence @litchar{\.} matches the period character.}
-通常，在正则表达式中的字符匹配相同文本字符串中的字符。有时使用正则表达式@tech{元序列（metasequence）}引用单个字符是有必要的或方便的。例如，元序列@litchar{\.}匹配句点字符。
+通常，在正则表达式中的一个字符匹配文本字符串中的相同字符。有时使用一个正则表达式@tech{元序列（metasequence）}来引用一个单个字符是有必要的或方便的。例如，这个元序列@litchar{\.}匹配句点字符。
 
 @;{The @tech{metacharacter} @litchar{.} matches @emph{any} character
 (other than newline in @tech{multi-line mode}; see
 @secref["regexp-cloister"]):}
-@tech{元字符（metacharacter）}@litchar{.}匹配@emph{任意（any）}字符（除了在@tech{多行模式（multi-line mode）}中换行，参见《@secref["regexp-cloister"]》（Cloisters））：
+这个@tech{元字符（metacharacter）}@litchar{.}匹配@emph{任意}字符（除了在@tech{多行模式（multi-line mode）}中的换行，参见《@secref["regexp-cloister"]》（Cloisters））：
 
 @interaction[
 #:eval rx-eval
 (regexp-match #rx"p.t" "pet")
 ]
 
+@;???????????????????????????????????????????????????????????????????
 @;{The above pattern also matches @litchar{pat}, @litchar{pit},
 @litchar{pot}, @litchar{put}, and @litchar{p8t}, but not
 @litchar{peat} or @litchar{pfffft}.}
