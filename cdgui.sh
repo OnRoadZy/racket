@@ -1,2 +1,1 @@
-cd ~
-cd ~/RacketProg/racket6.12/pkgs/racket-doc/scribblings/guide/
+cd `pwd`/pkgs/racket-doc/scribblings/guide/
