@@ -335,7 +335,6 @@ metasequence @litchar{\.} matches the period character.}
 (regexp-match #rx"p.t" "pet")
 ]
 
-@;???????????????????????????????????????????????????????????????????
 @;{The above pattern also matches @litchar{pat}, @litchar{pit},
 @litchar{pot}, @litchar{put}, and @litchar{p8t}, but not
 @litchar{peat} or @litchar{pfffft}.}
@@ -348,8 +347,8 @@ character from the non-empty sequence of characters enclosed within
 the brackets.  Thus, @racket[#rx"p[aeiou]t"] matches @litchar{pat},
 @litchar{pet}, @litchar{pit}, @litchar{pot}, @litchar{put}, and
 nothing else.}
-@deftech{字符类（character class）}匹配来自于一组字符中的任何一个字符。一个典型的格式，这是@deftech{括号字符类（bracketed
-character class）}@litchar{[}...@litchar{]}，它匹配任何一个来自包含在括号内的非空序列的字符。因此，@racket[#rx"p[aeiou]t"]匹配@litchar{pat}、@litchar{pet}、@litchar{pit}、@litchar{pot}、@litchar{put}，别的都不匹配。
+一个@deftech{字符类（character class）}匹配来自一组字符中的任意一个字符。对这种情况的一个典型的格式是@deftech{括号字符类（bracketed
+character class）}@litchar{[}...@litchar{]}，它匹配任意一个来自包含在括号内的非空序列的字符。因此，@racket[#rx"p[aeiou]t"]匹配@litchar{pat}、@litchar{pet}、@litchar{pit}、@litchar{pot}、@litchar{put}，别的都不匹配。
 
 @;{Inside the brackets, a @litchar{-} between two characters specifies
 the Unicode range between the characters.  For example,
@@ -363,7 +362,7 @@ specified by the rest of the contents; i.e., it specifies the set of
 characters @emph{other than} those identified in the brackets. For
 example, @racket[#rx"do[^g]"] matches all three-character sequences
 starting with @litchar{do} except @litchar{dog}.}
-在左括号后一个初始的@litchar{^}将通过剩下的内容反转指定的集合；@emph{也就是说}，它指定识别在括号内字符集以外的字符集。例如，@racket[#rx"do[^g]"]匹配所有以 @litchar{do}开始但不是@litchar{dog}的三字符序列。
+在左括号后的一个初始@litchar{^}将反转通过剩下的内容指定的集合；@emph{也就是说}，它指定的这个字符集@emph{排除}括号中标识的字符集。例如，@racket[#rx"do[^g]"]匹配所有以 @litchar{do}开始但不是@litchar{dog}的三字符序列。
 
 @;{Note that the @tech{metacharacter} @litchar{^} inside brackets means
 something quite different from what it means outside.  Most other
@@ -373,7 +372,7 @@ brackets, although you may still escape them for peace of mind. A
 @litchar{-} is a @tech{metacharacter} only when it's inside brackets,
 and when it is neither the first nor the last character between the
 brackets.}
-注意括号内的@tech{元字符（metacharacter）}@litchar{^}，它在括号里边的意义与在外边的意义截然不同。大多数其它的@tech{元字符（metacharacters）}（@litchar{.}、@litchar{*}、@litchar{+}、@litchar{?}，等等）当在括号内的时候不再是@tech{元字符（metacharacters）}，即使你一直不予承认以求得内心平静。一个@litchar{-}是一个@tech{元字符（metacharacter）}，仅当它在括号内并且当它既不是括号之间的第一个字符也不是最后一个字符时。
+注意括号之内的@tech{元字符}@litchar{^}，它在括号里边的意义与在外边的意义截然不同。大多数其它的@tech{元字符}（@litchar{.}、@litchar{*}、@litchar{+}、@litchar{?}，等等）当在括号之内时不再是@tech{元字符}，即使你一直也许一直不予承认以求得内心平静。仅当它在括号内，并且当它既不是括号之间的第一个字符也不是最后一个字符时，一个@litchar{-}是一个@tech{元字符}。
 
 @;{Bracketed character classes cannot contain other bracketed character
 classes (although they contain certain other types of character
@@ -381,17 +380,18 @@ classes; see below).  Thus, a @litchar{[} inside a bracketed character
 class doesn't have to be a metacharacter; it can stand for itself.
 For example, @racket[#rx"[a[b]"] matches @litchar{a}, @litchar{[}, and
 @litchar{b}.}
-括号内的字符类不能包含其它括号字符类（虽然它们包含字符类的某些其它类型，见下）。因此，在一个括号内的字符类里的一个@litchar{[}不必是一个元字符；它可以代表自身。比如，@racket[#rx"[a[b]"]匹配@litchar{a}、@litchar{[}和@litchar{b}。
+括号内的字符类不能包含其它被括号包裹的字符类（虽然它们包含字符类的某些其它类型，见下）。因此，在一个被括起来的字符类里的一个@litchar{[}不必是一个元字符；它可以代表自身。比如，@racket[#rx"[a[b]"]匹配@litchar{a}、@litchar{[}和@litchar{b}。
 
 @;{Furthermore, since empty bracketed character classes are disallowed, a
 @litchar{]} immediately occurring after the opening left bracket also
 doesn't need to be a metacharacter.  For example, @racket[#rx"[]ab]"]
 matches @litchar{]}, @litchar{a}, and @litchar{b}.}
-此外，由于空括号字符类是不允许的，一个@litchar{]}在开左括号后立即出现也不比是一个元字符。比如，@racket[#rx"[]ab]"]匹配@litchar{]}、@litchar{a}和@litchar{b}。
+此外，由于空括号字符类是不允许的，一个@litchar{]}立即出现在开左括号后也不必是一个元字符。比如，@racket[#rx"[]ab]"]匹配@litchar{]}、@litchar{a}和@litchar{b}。
 
 @;{@subsection{Some Frequently Used Character Classes}}
 @subsection[#:tag "Some-Frequently-Used-Character-Classes"]{常用的字符类}
 
+@;???????????????????????????????????????
 @;{In @litchar{#px} syntax, some standard character classes can be
 conveniently represented as metasequences instead of as explicit
 bracketed expressions:  @litchar{\d} matches a digit
