@@ -391,27 +391,26 @@ matches @litchar{]}, @litchar{a}, and @litchar{b}.}
 @;{@subsection{Some Frequently Used Character Classes}}
 @subsection[#:tag "Some-Frequently-Used-Character-Classes"]{常用的字符类}
 
-@;???????????????????????????????????????
 @;{In @litchar{#px} syntax, some standard character classes can be
 conveniently represented as metasequences instead of as explicit
 bracketed expressions:  @litchar{\d} matches a digit
 (the same as @litchar{[0-9]}); @litchar{\s} matches an ASCII whitespace character; and
 @litchar{\w} matches a character that could be part of a
 ``word''.}
-在@litchar{#px}语法里，一些标准的字符类可以方便地表示为元序列以代替明确的括号内的表达式：@litchar{\d}匹配一个数字（与@litchar{[0-9]}同样）；@litchar{\s}匹配一个ASCII空白字符；而@litchar{\w}匹配一个可以是“字（word）”的一部分的字符。
+在@litchar{#px}语法里，一些标准的字符类可以方便地表示为元序列以代替明确的括号内表达式：@litchar{\d}匹配一个数字（与@litchar{[0-9]}一样）；@litchar{\s}匹配一个ASCII空白字符；而@litchar{\w}匹配可以是一个“字（word）”的一部分的一个字符。
 
 @margin-note{
  @;{Following regexp custom, we identify ``word'' characters
 as @litchar{[A-Za-z0-9_]}, although these are too restrictive for what
 a Racketeer might consider a ``word.''}
-下面的正则表达式惯例，我们确定”字（word）“字符为@litchar{[A-Za-z0-9_]}，虽然这些限制对一个可能会看重一个”字（word）“的Racket使用者来说过于严格。
+遵循正则表达式惯例，我们确定”字“字符为@litchar{[A-Za-z0-9_]}，虽然这些对一个可能会看重一个”字“的Racket使用者来说过于严格。
    }
 
 @;{The upper-case versions of these metasequences stand for the
 inversions of the corresponding character classes: @litchar{\D}
 matches a non-digit, @litchar{\S} a non-whitespace character, and
 @litchar{\W} a non-``word'' character.}
-这些元序列的大写版本代表相应的字符类的反转：@litchar{\D}匹配一个非数字，@litchar{\S}匹配一个非空格字符，而@litchar{\W}匹配一个非“字（word）”字符。
+这些元序列的这个大写版本代表对应字符类的倒转：@litchar{\D}匹配一个非数字，@litchar{\S}匹配一个非空格字符，而@litchar{\W}匹配一个非“字”字符。
 
 @;{Remember to include a double backslash when putting these
 metasequences in a Racket string:}
@@ -426,7 +425,7 @@ metasequences in a Racket string:}
 @;{These character classes can be used inside a bracketed expression. For
 example, @racket[#px"[a-z\\d]"] matches a lower-case letter or a
 digit.}
-这些字符类可以在括号表达式中使用。比如，@racket[#px"[a-z\\d]"]匹配一个小写字母或数字。
+这些字符类可以使用进一个括号表达式中。比如，@racket[#px"[a-z\\d]"]匹配一个小写字母或一个数字。
 
 @;{@subsection{POSIX character classes}}
 @subsection[#:tag "POSIX-character-classes"]{POSIX字符类}
@@ -435,7 +434,7 @@ digit.}
 the form @litchar{[:}...@litchar{:]} that can be used only inside a
 bracketed expression in @litchar{#px} syntax.  The POSIX classes
 supported are}
-一个@deftech{POSIX（可移植性操作系统接口）字符类（character class）}是一种特殊的表@litchar{[:}...@litchar{:]}的@tech{元序列（metasequence）}，它只能用在 @litchar{#px}语法中的一个括号表达式内。POSIX类支持
+一个@deftech{POSIX（可移植性操作系统接口）字符类}是表@litchar{[:}...@litchar{:]}的一种特殊的@tech{元序列（metasequence）}，这个表只能用在 @litchar{#px}语法中的一个括号表达式内。这个POSIX类支持
 
 @itemize[#:style (make-style "compact" null)
 
@@ -469,7 +468,7 @@ supported are}
 
 @;{For example, the @racket[#px"[[:alpha:]_]"] matches a letter or
 underscore.}
-例如，@racket[#px"[[:alpha:]_]"]匹配一个字母或下划线
+例如，这个@racket[#px"[[:alpha:]_]"]匹配一个字母或下划线
 
 @interaction[
 #:eval rx-eval
@@ -484,7 +483,7 @@ bracketed expression, will not be read as the letter class.  Rather,
 it is (from previous principles) the character class containing the
 characters @litchar{:}, @litchar{a}, @litchar{l}, @litchar{p},
 @litchar{h}.}
-POSIX类符号@emph{只（only）}适用于在括号表达式内。例如，@litchar{[:alpha:]}，当不在括号表达式内时，不会被当做字母类读取。确切地说，它是（从以前的原则）包含字符:@litchar{:}、@litchar{a}、@litchar{l}、@litchar{p}、@litchar{h}的字符类。
+这个POSIX类符号@emph{只（only）}适用于在一个带括号的表达式内。比如@litchar{[:alpha:]}，当不在一个带括号的表达式内时，不会被当做字母类读取。确切地说，它是（来自以前的准则）包含字符：@litchar{:}、@litchar{a}、@litchar{l}、@litchar{p}、@litchar{h}的字符类。
 
 @interaction[
 #:eval rx-eval
@@ -500,7 +499,7 @@ POSIX类符号@emph{只（only）}适用于在括号表达式内。例如，@lit
 @;{The @deftech{quantifiers} @litchar{*}, @litchar{+}, and @litchar{?}
 match respectively: zero or more, one or more, and zero or one
 instances of the preceding subpattern.}
-@deftech{量词（quantifier）} @litchar{*}、 @litchar{+}和 @litchar{?}分别匹配：前面的子模式的零个或多个，一个或多个以及零个或一个实例。
+这个@deftech{量词（quantifier）} @litchar{*}、 @litchar{+}和 @litchar{?}分别匹配：零个或多个，一个或多个，以及零个或一个前面子模式的实例。
 
 @interaction[
 #:eval rx-eval
@@ -518,7 +517,7 @@ instances of the preceding subpattern.}
 @;{In @litchar{#px} syntax, you can use braces to specify much
 finer-tuned quantification than is possible with @litchar{*},
 @litchar{+}, @litchar{?}:}
-在@litchar{#px}语法里，你可以使用括号指定比@litchar{*}、@litchar{+}、@litchar{?}更精细的调整量：
+在@litchar{#px}语法里，你可以使用括号来指定比用@litchar{*}、@litchar{+}、@litchar{?}更精细的调整量：
 
 @itemize[
 
@@ -526,7 +525,7 @@ finer-tuned quantification than is possible with @litchar{*},
   @;{The quantifier @litchar["{"]@math{m}@litchar["}"] matches
        @emph{exactly} @math{m} instances of the preceding
        @tech{subpattern}; @math{m} must be a nonnegative integer.}
-量词@litchar["{"]@math{m}@litchar["}"]@emph{精确（exactly）}匹配前面@tech{子模式(subpattern)}的@math{m}实例；@math{m}必须是一个非负整数。
+这个量词@litchar["{"]@math{m}@litchar["}"]@emph{精确}匹配前面@tech{子模式}的@math{m}实例；@math{m}必须是一个非负整数。
     }
 
  @item{
@@ -537,11 +536,12 @@ finer-tuned quantification than is possible with @litchar{*},
        equal to @math{n}.  You may omit either or both numbers, in
        which case @math{m} defaults to @math{0} and @math{n} to
        infinity.}
-量词@litchar["{"]@math{m}@litchar{,}@math{n}@litchar["}"]匹配至少@math{m}并至多@math{n}个实例。@litchar{m}和@litchar{n}是非负整数，@math{m}小于或等于@math{n}。你可以省略一个或两个都省略，在这种情况下@math{m}默认为@math{0}，@math{n}到无穷大。
+这个量词@litchar["{"]@math{m}@litchar{,}@math{n}@litchar["}"]最少匹配@math{m}且最多匹配@math{n}个实例。@litchar{m}和@litchar{n}是非负整数，@math{m}小于或等于@math{n}。你可以省略一个数字或两个数字都省略，在这种情况下默认@math{m}为@math{0}，@math{n}为无穷大。
     }
 
 ]
 
+@;???????????????????????????????????????????????????/
 @;{It is evident that @litchar{+} and @litchar{?} are abbreviations for
 @litchar{{1,}} and @litchar{{0,1}} respectively, and @litchar{*}
 abbreviates @litchar{{,}}, which is the same as @litchar{{0,}}.}
