@@ -541,11 +541,10 @@ finer-tuned quantification than is possible with @litchar{*},
 
 ]
 
-@;???????????????????????????????????????????????????/
 @;{It is evident that @litchar{+} and @litchar{?} are abbreviations for
 @litchar{{1,}} and @litchar{{0,1}} respectively, and @litchar{*}
 abbreviates @litchar{{,}}, which is the same as @litchar{{0,}}.}
-很明显，@litchar{+}和@litchar{?}是@litchar{{1,}}和@litchar{{0,1}}的缩写，@litchar{*}是@litchar{{,}}的缩写，这和@litchar{{0,}}一样。
+很明显，@litchar{+}和@litchar{?}是@litchar{{1,}}和@litchar{{0,1}}的缩写，@litchar{*}是@litchar{{,}}的缩写，这个和@litchar{{0,}}一样。
 
 @interaction[
 #:eval rx-eval
@@ -558,7 +557,7 @@ abbreviates @litchar{{,}}, which is the same as @litchar{{0,}}.}
 @;{The quantifiers described so far are all @deftech{greedy}: they match
 the maximal number of instances that would still lead to an overall
 match for the full pattern.}
-迄今为止所描述的量词都是@deftech{贪婪的（greedy）}：它们匹配最大的实例数，还会导致对整个模式的总体匹配。
+到目前为止所描述的量词都是@deftech{贪婪的（greedy）}：它们匹配最大数量的实例，这样会导致一个对整个模式的总体匹配。
 
 @interaction[
 #:eval rx-eval
@@ -568,7 +567,7 @@ match for the full pattern.}
 @;{To make these quantifiers @deftech{non-greedy}, append a @litchar{?}
 to them.  Non-greedy quantifiers match the minimal number of instances
 needed to ensure an overall match.}
-为了使这些量词为@deftech{非贪婪的（non-greedy）}，给它们追加@litchar{?}。非贪婪量词匹配满足需要的最小实例数，以确保整体匹配。
+为了使这些量词成为@deftech{非贪婪的（non-greedy）}，给它们追加一个@litchar{?}。非贪婪量词匹配最小数量的实例需要确保整体匹配。
 
 @interaction[
 #:eval rx-eval
@@ -579,19 +578,19 @@ needed to ensure an overall match.}
 @litchar{+?}, @litchar{??}, @litchar["{"]@math{m}@litchar["}?"],
 @litchar["{"]@math{m}@litchar{,}@math{n}@litchar["}?"].  Note the two
 uses of the metacharacter @litchar{?}.}
-非贪婪量词分别为：@litchar{*?}、@litchar{+?}、@litchar{??}、@litchar["{"]@math{m}@litchar["}?"]、@litchar["{"]@math{m}@litchar{,}@math{n}@litchar["}?"]。注意匹配字符@litchar{?}的这两种使用。
+非贪婪量词分别为：@litchar{*?}、@litchar{+?}、@litchar{??}、@litchar["{"]@math{m}@litchar["}?"]、@litchar["{"]@math{m}@litchar{,}@math{n}@litchar["}?"]。注意元字符@litchar{?}的这两种使用。
 
 @; ----------------------------------------
 
 @;{@section[#:tag "regexp-clusters"]{Clusters}}
-@section[#:tag "regexp-clusters"]{聚类}
+@section[#:tag "regexp-clusters"]{簇}
 
 @;{@deftech{Clustering}---enclosure within parens
 @litchar{(}...@litchar{)}---identifies the enclosed
 @deftech{subpattern} as a single entity.  It causes the matcher to
 capture the @deftech{submatch}, or the portion of the string matching
 the subpattern, in addition to the overall match:}
-@deftech{聚类（Clustering）}——文内的括号@litchar{(}...@litchar{)}——确定封闭@deftech{子模式（subpattern）}作为一个单一的实体。它使匹配去捕获@deftech{子匹配项（submatch）}，或字符串的一部分匹配子模式，除了整体匹配之外：
+@deftech{簇（Clustering）}——圈占于括号内@litchar{(}...@litchar{)}——识别封闭的@deftech{子模式（subpattern）}作为一个单一的实体。它导致匹配器去捕获@deftech{子匹配（submatch）}，或者字符串的一部分匹配这个子模式，除了整体匹配除外：
 
 @interaction[
 #:eval rx-eval
@@ -600,7 +599,7 @@ the subpattern, in addition to the overall match:}
 
 @;{Clustering also causes a following quantifier to treat the entire
 enclosed subpattern as an entity:}
-聚类也导致以下量词对待整个封闭的模式作为一个实体：
+簇也导致一个后面的量词把整个封闭模式作为一个实体处理：
 
 @interaction[
 #:eval rx-eval
@@ -610,7 +609,7 @@ enclosed subpattern as an entity:}
 @;{The number of submatches returned is always equal to the number of
 subpatterns specified in the regexp, even if a particular subpattern
 happens to match more than one substring or no substring at all.}
-返回的匹配项数量总是等于指定的正则表达式子模式的数量，即使一个特定的子模式恰好匹配多个子字符串或根本没有子串。
+返回的匹配项数量总是等于在正则表达式中指定的子模式数量，即使一个特定的子模式碰巧匹配不止一个子字符串或根本没有子串。
 
 @interaction[
 #:eval rx-eval
@@ -619,18 +618,18 @@ happens to match more than one substring or no substring at all.}
 
 @;{Here, the @litchar{*}-quantified subpattern matches three times, but
 it is the last submatch that is returned.}
-在这里，@litchar{*}量化子模式匹配的三次，但这是返回的最后一个匹配项。
+在这里，这个@litchar{*}量化的子模式匹配三次，但这是被返回的最后一个匹配项。
 
 @;{It is also possible for a quantified subpattern to fail to match, even
 if the overall pattern matches.  In such cases, the failing submatch
 is represented by @racket[#f]}
-对一个量化的模式来说不匹配也是可能的，甚至是对整个模式匹配。在这种情况下，失败的匹配项通过@racket[#f]体现。
+对一个量化的子模式来说不匹配也是可能的，即使是整个模式匹配。在这种情况下，这个失败的子匹配被@racket[#f]体现。
 
 @interaction[
 #:eval rx-eval
 (define date-re
-  (code:comment @#,t{match `month year' or `month day, year';})
-  (code:comment @#,t{subpattern matches day, if present})
+  (code:comment @#,t{@;{match `month year' or `month day, year';}匹配“月年”或“月日年”})
+  (code:comment @#,t{@;{subpattern matches day, if present}子模式匹配天，如果目前})
   #rx"([a-z]+) +([0-9]+,)? *([0-9]+)")
 (regexp-match date-re "jan 1, 1970")
 (regexp-match date-re "jan 1970")
@@ -638,7 +637,7 @@ is represented by @racket[#f]}
 
 
 @;{@subsection{Backreferences}}
-@subsection[#:tag "Backreferences"]{后向引用}
+@subsection[#:tag "Backreferences"]{反向引用}
 
 @;{@tech{Submatch}es can be used in the insert string argument of the
 procedures @racket[regexp-replace] and @racket[regexp-replace*].  The
@@ -646,7 +645,7 @@ insert string can use @litchar{\}@math{n} as a @deftech{backreference}
 to refer back to the @math{n}th submatch, which is the substring
 that matched the @math{n}th subpattern.  A @litchar{\0} refers to the
 entire match, and it can also be specified as @litchar{\&}.}
-@tech{子匹配（Submatch）}可用于插入字符串参数的@racket[regexp-replace]和@racket[regexp-replace*]程序。插入的字符串可以使用@litchar{\}@math{n}为@deftech{后向引用（backreference）}返回第@math{n}个匹配项，这是子字符串，它匹配第@math{n}个子模式。一个@litchar{\0}引用整个匹配，它也可以指定为@litchar{\&}。
+@tech{子匹配}可用于插入程序@racket[regexp-replace]和@racket[regexp-replace*]的字符串参数。这个插入的字符串可以使用@litchar{\}@math{n}做为@deftech{反向引用（backreference）}来反向引用第@math{n}个匹配项，它是匹配第@math{n}个子模式的子字符串。一个@litchar{\0}引用整个匹配，并且它也可以被指定为@litchar{\&}。
 
 @interaction[
 #:eval rx-eval
@@ -666,7 +665,7 @@ entire match, and it can also be specified as @litchar{\&}.}
 Also, @litchar{\$} stands for an empty string, and is useful for
 separating a backreference @litchar{\}@math{n} from an immediately
 following number.}
-使用@litchar{\\}在插入字符串指定转义符。同时，@litchar{\$}代表空字符串，并且对从紧随其后的数字分离后向引用@litchar{\}@math{n}是有用的。
+在插入字符串中使用@litchar{\\}来指定一个字面反斜杠。同样，@litchar{\$}代表一个空字符串，并且对从一个紧随其后的数字来分离一个反向引用@litchar{\}@math{n}是有用的。
 
 @;{Backreferences can also be used within a @litchar{#px} pattern to
 refer back to an already matched subpattern in the pattern.
@@ -674,7 +673,7 @@ refer back to an already matched subpattern in the pattern.
 submatch. Note that @litchar{\0}, which is useful in an insert string,
 makes no sense within the regexp pattern, because the entire regexp
 has not matched yet so you cannot refer back to it.}
-反向引用也可以用@litchar{#px}模式以返回模式中的一个已经匹配的子模式。@litchar{\}@math{n}代表第@math{n}个子匹配的精确重复。注意这个@litchar{\0}，它在插入字符串是有用的，在regexp模式内没有道理，因为整个正则表达式不匹配而无法回到它。
+反向引用也可以用在一个@litchar{#px}模式内部来引用返回给这个模式里的一个已经匹配的子模式。@litchar{\}@math{n}代表第@math{n}个子匹配的一个精确重复。注意这个@litchar{\0}，它在一个插入的字符串中是有用的，在正则表达式模式内部毫无意义，因为整个正则表达式不匹配而无法对它反向引用。
 
 @interaction[
 #:eval rx-eval
@@ -685,13 +684,13 @@ has not matched yet so you cannot refer back to it.}
 @;{Note that the @tech{backreference} is not simply a repeat of the
 previous subpattern.  Rather it is a repeat of the particular
 substring already matched by the subpattern.}
-注意，@tech{后向引用（backreference）}不是简单地重复以前的子模式。而这是一个特别的被子模式所匹配的子串的重复。
+注意，这个@tech{反向引用}不是简单的一个以前子模式的重复。而是一个已经被子模式匹配的特定子字符串的重复。
 
 @;{In the above example, the @tech{backreference} can only match
 @litchar{billions}.  It will not match @litchar{millions}, even though
 the subpattern it harks back to---@litchar{([a-z]+)}---would have had
 no problem doing so:}
-在上面的例子中，@tech{后向引用（backreference）}只能匹配@litchar{billions}。它不会匹配@litchar{millions}，即使子模式追溯到——@litchar{([a-z]+)}——这样做会没有问题：
+在上面的例子中，@tech{反向引用}只能匹配@litchar{billions}。它不会匹配@litchar{millions}，即使这个子模式重新回到——@litchar{([a-z]+)}——这样做会没有问题：
 
 @interaction[
 #:eval rx-eval
@@ -701,7 +700,7 @@ no problem doing so:}
 
 @;{The following example marks all immediately repeating patterns in a
 number string:}
-下面的示例标记数字字符串中所有立即重复的模式：
+下面的示例在一个数字字符串中标记所有立即重复的模式：
 
 @interaction[
 #:eval rx-eval
@@ -711,7 +710,7 @@ number string:}
 ]
 
 @;{The following example corrects doubled words:}
-下面的示例修正了两个字：
+下面的示例修正重叠字：
 
 @interaction[
 #:eval rx-eval
@@ -729,17 +728,17 @@ quantification) but without triggering the capture of @tech{submatch}
 information.  Such clusters are called @deftech{non-capturing}.  To
 create a non-capturing cluster, use @litchar{(?:} instead of
 @litchar{(} as the cluster opener.}
-它通常需要指定一个簇（通常为量化）但不触发@tech{子匹配（submatch）}项的信息捕捉。这种簇称为@deftech{非捕捉（non-capturing）}。要创建非簇，请使用@litchar{(?:}以代替@litchar{(}作为簇开启器。
+它通常需要指定一个簇（通常用于量化）但没有触发@tech{子匹配}信息的捕捉。这种簇被称为@deftech{非捕捉（non-capturing）}。为了创建一个非捕捉簇，使用@litchar{(?:}代替@litchar{(}作为这个簇开启器。
 
 @;{In the following example, a non-capturing cluster eliminates the
 ``directory'' portion of a given Unix pathname, and a capturing
 cluster identifies the basename.}
-在下面的例子中，一个非簇消除了“目录”部分的一个给定的UNIX路径名，并获取簇标识。
+在下面的例子中，一个非捕捉簇消除了一个给定UNIX路径名的“目录”部分，并一个捕捉簇识别出基本名。
 
 @margin-note{
  @;{But don't parse paths with regexps. Use functions like
  @racket[split-path], instead.}
-   但不要用正则表达式解析路径。使用诸如@racket[split-path]之类的函数代替。
+   但不要用正则表达式解析路径。使用诸如@racket[split-path]之类的函数来代替。
    }
 
 @interaction[
@@ -748,6 +747,7 @@ cluster identifies the basename.}
               "/usr/local/bin/racket")
 ]
 
+@;???????????????????????????????????????????????????????/
 @;{@subsection[#:tag "regexp-cloister"]{Cloisters}}
 @subsection[#:tag "regexp-cloister"]{回廊}
 
