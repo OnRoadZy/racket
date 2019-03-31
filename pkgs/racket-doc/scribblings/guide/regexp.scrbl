@@ -747,7 +747,6 @@ cluster identifies the basename.}
               "/usr/local/bin/racket")
 ]
 
-@;???????????????????????????????????????????????????????/
 @;{@subsection[#:tag "regexp-cloister"]{Cloisters}}
 @subsection[#:tag "regexp-cloister"]{回廊}
 
@@ -756,12 +755,12 @@ non-capturing cluster is called a @deftech{cloister}. You can put
 modifiers there that will cause the enclustered @tech{subpattern} to
 be treated specially.  The modifier @litchar{i} causes the subpattern
 to match case-insensitively:}
-一个非捕捉簇@litchar{?}和@litchar{:}之间的位置称为@deftech{回廊（cloister）}。你可以把修饰符放在这儿，有可能会使簇@tech{子模式（subpattern）}被特别处理。这个修饰符@litchar{i}使子模式匹配时不区分大小写：
+非捕捉簇的@litchar{?}和@litchar{:}之间的位置称为@deftech{回廊(cloister)}。你可以在此处放置修改器,以使簇的@tech{子模式(subpattern)}得到特殊处理。修饰符@litchar{i}使子模式不敏感地匹配大小写:
 
 @margin-note{
  @;{The term @defterm{cloister} is a useful, if terminally
 cute, coinage from the abbots of Perl.}
-   术语@defterm{回廊（cloister）}是一个有用的，如果最终的可爱，从Perl的住持创造的词语。
+   @defterm{回廊（cloister）}是一个有用的术语，如果最终可爱，来自Perl的住持创造的词语。
    }
 
 @interaction[
@@ -794,7 +793,7 @@ can match just before a newline.}
 @;{A minus sign before a modifier inverts its meaning.  Thus, you can use
 @litchar{-i} in a @deftech{subcluster} to overturn the
 case-insensitivities caused by an enclosing cluster.}
-在修饰符前的一个减号反转它的意思。因此，你可以在@deftech{子类（subcluster）}中使用@litchar{-i}以翻转案例不由封闭簇造导致。
+在修饰符前的一个减号反转它的意义。因此，你可以在@deftech{子簇（subcluster）}中使用@litchar{-i}以翻转由封闭簇导致的案例不敏感。
 
 @interaction[
 #:eval rx-eval
@@ -805,18 +804,18 @@ case-insensitivities caused by an enclosing cluster.}
 @;{The above regexp will allow any casing for @litchar{the} and
 @litchar{book}, but it insists that @litchar{TeX} not be differently
 cased.}
-上述正表达式将允许任何针对@litchar{the}和@litchar{book}的外壳，但它坚持认为@litchar{TeX}有不同的包装。
+上述正表达式将允许任何针对@litchar{the}和@litchar{book}的包装，但它坚持认为@litchar{TeX}没有不同的包装。
 
 @; ----------------------------------------
 
 @;{@section[#:tag "regexp-alternation"]{Alternation}}
-@section[#:tag "regexp-alternation"]{替代}
+@section[#:tag "regexp-alternation"]{替补}
 
 @;{You can specify a list of @emph{alternate} @tech{subpatterns} by
 separating them by @litchar{|}.  The @litchar{|} separates
 @tech{subpatterns} in the nearest enclosing cluster (or in the entire
 pattern string if there are no enclosing parens).}
-你可以通过用@litchar{|}分隔它们来指定@emph{替代（alternate）}@tech{子模式（subpatterns）}的列表。在最近的封闭簇里@litchar{|}分隔@tech{子模式（subpatterns）}（或在整个模式字符串里，假如没有封闭括号）。
+你可以通过用@litchar{|}分隔它们来指定@emph{替补（alternate）}@tech{子模式（subpatterns）}的列表。在最近的封闭簇里@litchar{|}分隔@tech{子模式}（或在整个模式字符串里，假如没有封闭括号）。
 
 @interaction[
 #:eval rx-eval
@@ -831,7 +830,7 @@ pattern string if there are no enclosing parens).}
 @;{Note again that if you wish to use clustering merely to specify a list
 of alternate subpatterns but do not want the submatch, use
 @litchar{(?:} instead of @litchar{(}.}
-不过注意，如果你想使用簇仅仅是指定替代子模式列表，却不想指定匹配项，那么使用@litchar{(?:}代替@litchar{(}。
+不过注意，如果你想使用簇仅仅是指定替补子模式列表，却不想指定匹配项，那么使用@litchar{(?:}代替@litchar{(}。
 
 @interaction[
 #:eval rx-eval
@@ -842,7 +841,7 @@ of alternate subpatterns but do not want the submatch, use
 matching alternate is picked regardless of its length.  Thus, if one
 of the alternates is a prefix of a later alternate, the latter may not
 have a chance to match.}
-注意替代的一个重要事情是，最左匹配替代不管长短。因此，如果一个替代是后一个替代的前缀，后者可能没有机会匹配。
+注意替补的一个重要事情是，最左匹配替补不管长短。因此，如果一个替补是后一个替补的前缀，后者可能没有机会匹配。
 
 @interaction[
 #:eval rx-eval
@@ -852,7 +851,7 @@ have a chance to match.}
 
 @;{To allow the longer alternate to have a shot at matching, place it
 before the shorter one:}
-为了让较长的替代在匹配中有一个镜头，把它放在较短的一个之前：
+若要让较长的替补进行匹配,请将其放在较短的替补之前:
 
 @interaction[
 #:eval rx-eval
@@ -864,7 +863,7 @@ before the shorter one:}
 preferred to an overall non-match.  In the following, the longer
 alternate still wins, because its preferred shorter prefix fails to
 yield an overall match.}
-在任何情况下，对于整个正则表达式的整体匹配总是倾向于整体的不匹配。在下面这里，较长的替代仍然更好，因为它的较短的前缀不能产生整体匹配。
+在任何情况下,对整个正则表达式的整体匹配始终优先于整体的不匹配。在下面例子中,较长的替补仍然获胜,因为其首选的较短前缀无法产生整体匹配。
 
 @interaction[
 #:eval rx-eval
@@ -881,7 +880,7 @@ yield an overall match.}
 @;{We've already seen that greedy quantifiers match the maximal number of
 times, but the overriding priority is that the overall match succeed.
 Consider}
-我们已经明白贪婪的量词匹配的次数最多，但压倒一切的优先级才是整体匹配的成功。考虑以下内容
+我们已经看到贪婪量词匹配最大次数，但最重要的是整体匹配成功。考虑以下内容
 
 @interaction[
 #:eval rx-eval
@@ -894,7 +893,7 @@ all four @litchar{a}'s in the text string @racket[aaaa], even though
 @litchar{*} is a greedy quantifier.  It may match only the first
 three, leaving the last one for the second subregexp.  This ensures
 that the full regexp matches successfully.}
-这个正则表达式包括两个子正则表达式：@litchar{a*}，其次是@litchar{a}。子正则表达式@litchar{a*}不允许匹配文本字符串@racket[aaaa]里的所有的四个@litchar{a}，即使@litchar{*}是一个贪婪量词也一样。它可能仅匹配前面的三个，剩下最后一个给第二子正则表达式。这确保了完整的正则表达式匹配成功。
+这个正则表达式包括两个子正则表达式：@litchar{a*}后跟@litchar{a}。子正则表达式@litchar{a*}不能匹配文本字符串@racket[aaaa]里的所有的四个@litchar{a}，即使@litchar{*}是一个贪婪量词也一样。它可能仅匹配前面的三个，剩下最后一个留给第二子正则表达式。这样确保完整的正则表达式匹配成功。
 
 @;{The regexp matcher accomplishes this via a process called
 @deftech{backtracking}.  The matcher tentatively allows the greedy
@@ -902,7 +901,7 @@ quantifier to match all four @litchar{a}'s, but then when it becomes
 clear that the overall match is in jeopardy, it @emph{backtracks} to a
 less greedy match of three @litchar{a}'s.  If even this fails, as in
 the call}
-正则表达式匹配器通过一个称为@deftech{回溯（backtracking）}的过程实现来这个。匹配器暂时允许贪婪量词匹配所有四个@litchar{a}，但当整体匹配处于岌岌可危的状态变得清晰时，它@emph{回溯（backtracks）}到一个不那么贪婪的三个@litchar{a}的匹配。如果这也失败了，与以下调用一样
+正则表达式匹配器通过一个称为@deftech{回溯（backtracking）}的过程实现来这个。匹配器暂时允许贪婪量词匹配所有四个@litchar{a}，但当整体匹配处于危险中时，它@emph{回溯（backtracks）}到一个不那么贪婪的三个@litchar{a}的匹配。如果这也失败了，与以下调用一样
 
 @interaction[
 #:eval rx-eval
@@ -911,7 +910,7 @@ the call}
 
 @;{the matcher backtracks even further.  Overall failure is conceded
 only when all possible backtracking has been tried with no success.}
-匹配器回溯甚至更进一步。只有当所有可能的回溯尝试都没有成功时，整体失败才被承认。
+匹配器回溯得更远。只有当所有可能的回溯尝试都没有成功时，才承认整体失败。
 
 @;{Backtracking is not restricted to greedy quantifiers.
 Nongreedy quantifiers match as few instances as
@@ -920,13 +919,13 @@ instances in order to attain an overall match.  There
 is backtracking in alternation too, as the more
 rightward alternates are tried when locally successful
 leftward ones fail to yield an overall match.}
-回溯并不局限于贪婪量词。非贪婪量词匹配尽可能少的情况下，为了达到整体匹配，逐步回溯会有越来越多的实例。这里替代的回溯也更有向右替代的倾向，当局部成功的向左替代一旦失败则会产生一个整体的匹配。
+回溯并不局限于贪婪量词。非贪婪量词尽可能少地匹配实例，并逐步回溯到越来越多的实例，以获得整体匹配。替补中也有回溯，因为当局部成功的向左替补未能产生整体匹配时,会尝试更向右的替补。
 
 @;{Sometimes it is efficient to disable backtracking.  For example, we
 may wish to commit to a choice, or we know that trying alternatives is
 fruitless.  A nonbacktracking regexp is enclosed in
 @litchar{(?>}...@litchar{)}.}
-有时禁用回溯是有效的。例如，我们可能希望作出选择，或者我们知道尝试替代是徒劳的。一个非回溯正则表达式在@litchar{(?>}...@litchar{)}里是封闭的。
+有时禁用回溯是有效的。例如，我们可能希望作出选择，或者我们知道尝试替补是徒劳的。一个非回溯正则表达式是括在@litchar{(?>}...@litchar{)}里的。
 
 @interaction[
 #:eval rx-eval
@@ -938,12 +937,12 @@ fruitless.  A nonbacktracking regexp is enclosed in
 overall match is denied.  The effect of the regexp is therefore to
 match one or more @litchar{a}'s followed by something that is
 definitely non-@litchar{a}.}
-在这个调用里，子正则表达式@litchar{?>a+}贪婪地匹配所有四个@litchar{a}，并且回溯的机会被拒绝。因此，整体匹配被拒绝。这个正则表达式的效果因此对一个或多个@litchar{a}的匹配被某些明确@litchar{非a（non-a）}的予以继承。
+在这个调用里，子正则表达式@litchar{?>a+}贪婪地匹配所有四个@litchar{a}，并且剥夺了回溯的机会。因此，整体匹配被拒绝。于是，这个正则表达式的效果是匹配一个或多个@litchar{a}，后跟一些绝对不是@litchar{a}的内容。
 
 @; ----------------------------------------
 
 @;{@section{Looking Ahead and Behind}}
-@section[#:tag "Looking-Ahead-and-Behind"]{前后查找}
+@section[#:tag "Looking-Ahead-and-Behind"]{前寻与后寻}
 
 @;{You can have assertions in your pattern that look @emph{ahead} or
 @emph{behind} to ensure that a subpattern does or does not occur.
@@ -954,14 +953,14 @@ lookahead), @litchar{?<=} (positive lookbehind), @litchar{?<!}
 (negative lookbehind).  Note that the subpattern in the assertion does
 not generate a match in the final result; it merely allows or
 disallows the rest of the match.}
-用@litchar{?=}正向前查找窥探以提前确保其子模式能够匹配。
+你的模式中可以有@emph{前寻}或@emph{后寻}以确保子模式发生或不发生。这些“环顾”主张是通过将选中的子模式放入一个前导字符为：@litchar{?=}（用于主动前寻），@litchar{?!}（被动前寻），@litchar{?<=}（主动后寻），@litchar{?<!}（被动后寻）。请注意,主张中的子模式不会在最终结果中生成匹配；它只允许或不允许其余的匹配。
 
 @;{@subsection{Lookahead}}
-@subsection[#:tag "Lookahead"]{向前查找}
+@subsection[#:tag "Lookahead"]{前寻}
 
 @;{Positive lookahead with @litchar{?=} peeks ahead to ensure that
 its subpattern @emph{could} match.  }
-用@litchar{?=}正向前查找窥探以提前确保其子模式能够匹配。
+带@litchar{?=}的主动前寻检查其子模式是否@emph{可以}立即与文本字符串中当前位置的左侧匹配。
 
 @interaction[
 #:eval rx-eval
@@ -976,7 +975,7 @@ its subpattern @emph{could} match.  }
 
 @;{Negative lookahead with @litchar{?!} peeks ahead to ensure that its
 subpattern @emph{could not} possibly match.}
-用@litchar{?!}反向前查找窥探以提前确保其子模式@emph{不可能}匹配。
+被动后寻@litchar{?!}检查其子模式@emph{是否}可能立即与左侧匹配。
 
 @interaction[
 #:eval rx-eval
@@ -987,15 +986,15 @@ subpattern @emph{could not} possibly match.}
 @;{The regexp @racket[#rx"grey(?!hound)"] matches @litchar{grey}, but
 only if it is @emph{not} followed by @litchar{hound}.  Thus the
 @litchar{grey} just before @litchar{socks} is matched.}
-正则表达式@racket[#rx"grey(?!hound)"]匹配@litchar{grey}，但只有@litchar{hound}@emph{不}跟着它才行。因此@litchar{grey}仅仅在@litchar{socks}之前才匹配。
+正则表达式@racket[#rx"grey(?!hound)"]匹配@litchar{grey}，但前提是后面@emph{不}跟有@litchar{hound}。因此，@litchar{grey}仅仅在@litchar{socks}之前才匹配。
 
 @;{@subsection{Lookbehind}}
-@subsection[#:tag "Lookbehind"]{向后查找}
+@subsection[#:tag "Lookbehind"]{后寻}
 
 @;{Positive lookbehind with @litchar{?<=} checks that its subpattern
 @emph{could} match immediately to the left of the current position in
 the text string.}
-用@litchar{?<=}正向后查找检查其子模式@emph{可以}立即向文本字符串的当前位置左侧匹配。
+带@litchar{?<=}的主动后寻检查其子模式是否@emph{可以}立即与文本字符串中当前位置的左侧匹配。
 
 @interaction[
 #:eval rx-eval
@@ -1005,11 +1004,11 @@ the text string.}
 
 @;{The regexp @racket[#rx"(?<=grey)hound"] matches @litchar{hound}, but
 only if it is preceded by @litchar{grey}.}
-正则表达式@racket[#rx"(?<=grey)hound"]匹配@litchar{hound}，但前提是它是先于@litchar{grey}的。
+正则表达式@racket[#rx"(?<=grey)hound"]匹配@litchar{hound},但前提是前面是@litchar{grey}。
 
 @;{Negative lookbehind with @litchar{?<!} checks that its subpattern
 could not possibly match immediately to the left.}
-用@litchar{?<!}负向后查找检查它的子模式不可能立即匹配左侧。
+带@litchar{?<!}的被动后寻检查其子模式是否可能立即与左侧匹配。
 
 @interaction[
 #:eval rx-eval
@@ -1019,11 +1018,11 @@ could not possibly match immediately to the left.}
 
 @;{The regexp @racket[#rx"(?<!grey)hound"] matches @litchar{hound}, but
 only if it is @emph{not} preceded by @litchar{grey}.}
-正则表达式@racket[#rx"(?<!grey)hound"]匹配@litchar{hound}，但前提是它@emph{不是}先于@litchar{grey}的。
+正则表达式@racket[#rx"(?<!grey)hound"]匹配@litchar{hound}，但前提是前面@emph{没有}@litchar{grey}。
 
 @;{Lookaheads and lookbehinds can be convenient when they
 are not confusing.  }
-向前查找和向后查找在它们不混淆时可以是实用的。
+在不混淆的情况下,前寻和后寻可以很方便。
 
 @; ----------------------------------------
 
@@ -1037,11 +1036,12 @@ Expressions}, page 189, that covers many of the features described in
 this chapter.  The problem is to fashion a regexp that will match any
 and only IP addresses or @emph{dotted quads}: four numbers separated
 by three dots, with each number between 0 and 255.}
-这是一个从@italic{《Friedl’s Mastering Regular Expressions》}（189页）来的扩展的例子，涵盖了本章中介绍的许多特征。问题是要修饰一个正则表达式，它将匹配任何且唯一的IP地址或@emph{点缀四周（dotted quads）}：四个数字被三个点分开，每个数字在0和255之间。
+下面是一个扩展的例子，来自Friedl的@italic{《精通正则表达式（Mastering Regular
+Expressions）》}，第189页，它涵盖了本章中描述的许多特性。问题是要设计一个正则表达式,它将匹配任何且仅匹配IP地址或点分的四个四位数：四个由三个点分隔的数字，每个数字介于0和255之间。
 
 @;{First, we define a subregexp @racket[n0-255] that matches 0 through
 255:}
-首先，我们定义了一个子正则表达式@racket[n0-255]以匹配0到255：
+首先,我们定义一个与0到255匹配的子正则表达式@racket[n0-255]:
 
 @interaction[
 #:eval ex-eval
@@ -1062,8 +1062,7 @@ alternates, which is something we cautioned against in
 @secref["regexp-alternation"].  However, since we intend to anchor
 this subregexp explicitly to force an overall match, the order of the
 alternates does not matter.}
-请注意@racket[n0-255]表前缀作为首选的替代品，这是我们在@secref["regexp-alternation"]里的告诫。然而，由于我们意愿锚定这个子正则表达式明确地迫使一个整体匹配，交替的顺序并不重要。
-   }
+请注意@racket[n0-255]将前缀列为首选替代项，这是我们在@secref["regexp-alternation"]要注意的。但是，由于我们打算显式地锚定这个子正则表达式以强制进行整体匹配，所以交替的顺序并不重要。}
 
 @;{The first two alternates simply get all single- and
 double-digit numbers.  Since 0-padding is allowed, we
@@ -1072,11 +1071,11 @@ when getting 3-digit numbers, since numbers above 255
 must be excluded.  So we fashion alternates to get 000
 through 199, then 200 through 249, and finally 250
 through 255.}
-前两个替代只得到所有的一位数和两位数。因为0-padding是允许的，我们要匹配1和01。我们当得到3位数字时要小心，因为数字255以上必须排除。因此，我们的修饰替代，得到000至199，然后200至249，最后250至255。
+前两个替补简单地得到所有的单位和双位数字。因为允许0填充，所以我们需要同时匹配1和01。我们在得到三位数的数字时需要小心，因为必须排除255以上的数字。因此，我们交替使用000到199，然后是200到249，最后是250到255。
 
 @;{An IP-address is a string that consists of four @racket[n0-255]s with
 three dots separating them.}
-IP地址是一个字符串，包括四个@racket[n0-255]用三个点分隔。
+IP地址是一个由四个个@racket[n0-255]组成的字符串，用三个点分隔。
 
 @interaction[
 #:eval ex-eval
@@ -1113,7 +1112,7 @@ IP地址是一个字符串，包括四个@racket[n0-255]用三个点分隔。
 rescue.  Before starting to match @racket[ip-re1], we look ahead to
 ensure we don't have all zeros.  We could use positive lookahead to
 ensure there @emph{is} a digit other than zero.}
-所有的零序列都不是有效的IP地址！用向前查找救援。在开始匹配@racket[ip-re1]之前，我们向前查找以确保我们没有零。我们可以用正向前查找以确保@emph{是}一个非零的数字。
+所有零序列都不是有效的IP地址！前寻以救援。在开始匹配@racket[ip-re1]之前，我们前寻以确保我们没有所有的零。我们可以使用主动前寻来确保@emph{有}一个数字不是零。
 
 @interaction[
 #:eval ex-eval
@@ -1126,7 +1125,7 @@ ensure there @emph{is} a digit other than zero.}
 
 @;{Or we could use negative lookahead to ensure that what's ahead isn't
 composed of @emph{only} zeros and dots.}
-或者我们可以用负前查找确保前面不是@emph{只}由零和点组成。
+或者我们可以使用被动前寻来确保前面的内容不@emph{只}是由零和点组成。
 
 @interaction[
 #:eval ex-eval
@@ -1139,7 +1138,7 @@ composed of @emph{only} zeros and dots.}
 ]
 
 @;{The regexp @racket[ip-re] will match all and only valid IP addresses.}
-正则表达式@racket[ip-re]会匹配所有的并且唯一的IP地址。
+正则表达式@racket[ip-re]将匹配所有且仅匹配有效的IP地址。
 
 @interaction[
 #:eval ex-eval

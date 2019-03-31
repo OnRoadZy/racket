@@ -35,7 +35,7 @@
 - exercise 运用
 - escape 转义
 - matche 匹配
-- alternate 替代
+- alternate 替补
 - caught 捕获
 - wrap 封装
 - shadow 覆盖
