@@ -60,13 +60,13 @@ character that would need escaping inside a Racket string is
 当我们想要在一个Racket字符串或正则表达式原义里的一个字面原义的@litchar{\}，我们必须将它转义以便它出现在所有字符串中。Racket字符串使用@litchar{\}作为转义字符，所以我们用两个@litchar{\}结束：一个Racket字符串@litchar{\}转义正则表达式@litchar{\}，它接着转义@litchar{.}。另一个将要在Racket字符串里转义的字符是@litchar{"}。
 }
 
-If we needed to match the character @litchar{.} itself, we can escape
+@;{If we needed to match the character @litchar{.} itself, we can escape
 it by precede it with a @litchar{\}.  The character sequence
 @litchar{\.} is thus a @tech{metasequence}, since it doesn't match
 itself but rather just @litchar{.}.  So, to match @litchar{a},
 @litchar{.}, and @litchar{c} in succession, we use the regexp pattern
 @racket[#rx"a\\.c"]; the double @litchar{\} is an artifact of Racket
-strings, not the @tech{regexp} pattern itself.
+strings, not the @tech{regexp} pattern itself.}
 如果我们需要匹配字符@litchar{.}本身，我们可以在它前面加上一个@litchar{\}来转义。字符序列@litchar{\.}就是一个@tech{元序列（metasequence）}，因为它不匹配它本身而只是@litchar{.}。所以，连续匹配@litchar{a}、@litchar{.}和@litchar{c}，我们使用正则表达式模@racket[#rx"a\\.c"]。双@litchar{\}字符是一个Racket字符串技巧，不是@tech{正则表达式}模式本身。
 
 @;{The @racket[regexp] function takes a string or byte string and
