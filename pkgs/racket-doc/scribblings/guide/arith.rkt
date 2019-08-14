@@ -45,7 +45,7 @@
                     delta s)]))
 
   (unless expr-match
-    (raise-read-error "bad arithmetic syntax" 
+    (raise-read-error #|"bad arithmetic syntax" |# "错误的算术表达式" 
                       src line col pos 
                       (and pos (- (file-position in) pos))))
   (parse-expr (bytes->string/utf-8 (car expr-match)) 0))

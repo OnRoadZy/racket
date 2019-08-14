@@ -43,7 +43,7 @@ value representing the exception is passed to the handler procedure
 produced by @racket[_handler-expr].  The result of the
 @racket[_handler-expr] is the result of the @racket[with-handlers]
 expression.}
-在处理中的每个@racket[_predicate-expr]确定一种异常，它是由@racket[with-handlers]表捕获，代表异常的值传递给处理器程序由@racket[_handler-expr]生成。@racket[_handler-expr]的结果即@racket[with-handlers]表达式的结果。
+在处理器中的每个@racket[_predicate-expr]确定一种异常，它由@racket[with-handlers]表捕获，代表异常的值传递给处理器程序由@racket[_handler-expr]生成。@racket[_handler-expr]的结果即@racket[with-handlers]表达式的结果。
 
 @;{For example, a divide-by-zero error raises an instance of the
 @racket[exn:fail:contract:divide-by-zero] structure type:}
@@ -61,7 +61,7 @@ expression.}
 @;{The @racket[error] function is one way to raise your own exception. It
 packages an error message and other information into an
 @racket[exn:fail] structure:}
-@racket[error]函数是引起异常的一种方法。它打包一个错误信息及其它信息进入到@racket[exn:fail]结构：
+@racket[error]函数是引起异常的一种方法。它打包一个错误信息和其它信息进入@racket[exn:fail]结构：
 
 @interaction[
 (error "crash!")
@@ -104,7 +104,7 @@ exception is propagated to enclosing contexts.}
 ]
 
 @;{Using @racket[(lambda (v) #t)] as a predicate captures all exceptions, of course:}
-使用@racket[(lambda (v) #t)]作为一个判断捕获所有异常，当然：
+使用@racket[(lambda (v) #t)]作为判断捕获所有异常，当然：
 
 @interaction[
 (with-handlers ([(lambda (v) #t) (lambda (v) 'oops)])
@@ -117,12 +117,12 @@ in DrRacket to interrupt a computation, then normally the
 @racket[exn:break] exception should not be caught. To catch only
 exceptions that represent errors, use @racket[exn:fail?] as the
 predicate:}
-然而，捕获所有异常通常是个坏主意。如果用户在一个终端窗口键入ctl-c或者在DrRacket点击@onscreen{停止按钮（Stop）}中断计算，然后通常@racket[exn:break]异常不应该被捕获。仅仅应该抓取具有代表性的错误，使用@racket[exn:fail?]作为判断：
+然而，捕获所有异常通常是个坏主意。如果用户在一个终端窗口键入Ctl-C或者在DrRacket点击@onscreen{停止按钮（Stop）}中断计算，那么通常@racket[exn:break]异常不会被捕获。仅仅会抓取具有代表性的错误，使用@racket[exn:fail?]作为判断：
 
 @interaction[
 (with-handlers ([exn:fail? (lambda (v) 'oops)])
   (car 17))
-(eval:alts ; `examples' doesn't catch break exceptions!
+(eval:alts @;{ `examples' doesn't catch break exceptions!};“示例”不捕获中断异常！
  (with-handlers ([exn:fail? (lambda (v) 'oops)])
    (break-thread (current-thread)) (code:comment @#,t{simulate Ctl-C})
    (car 17))
@@ -148,7 +148,7 @@ keep going after an error is printed? You might think that it's
 because the @tech{REPL} wraps every interaction in a
 @racket[with-handlers] form that catches all exceptions, but that's
 not quite the reason.}
-但如果控制逃逸”所有的出路“，为什么@tech{REPL}在一个错误被打印之后能够继续运行？你可能会认为这是因为@tech{REPL}把每一个互动封装进了@racket[with-handlers]表里，它抓取了所有的异常，但这确实不是原因。
+但如果控制逃逸“所有的出路”，为什么@tech{REPL}在一个错误被打印之后能够继续运行？你可能会认为这是因为@tech{REPL}把每一个互动封装进了@racket[with-handlers]表里，它抓取了所有的异常，但这确实不是原因。
 
 @;{The actual reason is that the @tech{REPL} wraps the interaction with a
 @deftech{prompt}, which effectively marks the evaluation context with
@@ -157,8 +157,8 @@ the exception is printed, and then evaluation @deftech{aborts} to the
 nearest enclosing prompt. More precisely, each prompt has a
 @deftech{prompt tag}, and there is a designated @deftech{default
 prompt tag} that the uncaught-exception handler uses to @tech{abort}.}
-实际的原因是，@tech{REPL}用一个@deftech{提示（prompt）}封装了互动，有效地用一个逃逸位置标记求值上下文。如果一个异常没有被捕获，那么关于异常的信息被打印印刷，然后求值@deftech{中止（aborts）}到最近的封闭提示。更确切地说，每个提示有@deftech{提示标签（prompt tag）}，并有指定的@deftech{默认提示标签（default
-prompt tag）}，未捕获的异常处理程序使用@tech{中止（abort）}。
+实际的原因是，@tech{REPL}用一个@deftech{提示（prompt）}封装了互动，有效地用一个逃逸位置标记求值上下文。如果一个异常没有被捕获，那么关于异常的信息被打印，然后求值@deftech{中止（aborts）}到最近的封闭提示。更确切地说，每个提示有@deftech{提示标签（prompt tag）}，并有指定的@deftech{默认提示标签（default
+prompt tag）}，未捕获的异常处理程序用来@tech{中止}。
 
 @;{The @racket[call-with-continuation-prompt] function installs a prompt
 with a given @tech{prompt tag}, and then it evaluates a given thunk
@@ -166,7 +166,7 @@ under the prompt. The @racket[default-continuation-prompt-tag]
 function returns the @tech{default prompt tag}. The
 @racket[abort-current-continuation] function escapes to the nearest
 enclosing prompt that has a given @tech{prompt tag}.}
-@racket[call-with-continuation-prompt]函数用一个给定的@tech{提示标签（prompt tag）}设置提示，然后在提示符下对一个给定的thunk求值。@racket[default-continuation-prompt-tag]函数返回默认提示标记。@racket[abort-current-continuation]函数转义到具有给定@tech{提示标签（prompt tag）}的最近的封闭提示符。
+@racket[call-with-continuation-prompt]函数用一个给定的@tech{提示标签}设置提示，然后在提示符下对一个给定的铛（thunk）求值。@racket[default-continuation-prompt-tag]函数返回默认提示标记。@racket[abort-current-continuation]函数转义到具有给定@tech{提示标签}的最近的封闭提示符。
 
 @interaction[
 (define (escape v)
@@ -217,7 +217,7 @@ wrapped in a prompt.)}
 @;{at the point where @racket[0] is evaluated, the expression context
 includes three nested addition expressions. We can grab that context by
 changing @racket[0] to grab the continuation before returning 0:}
-在求值@racket[0]的位置时，表达式上下文包含三个嵌套的加法表达式。我们可以通过更改@racket[0]来获取上下文，然后在返回0之前获取延续：
+在求值@racket[0]的位置，表达式上下文包含三个嵌套的加法表达式。我们可以通过更改@racket[0]来获取上下文，然后在返回0之前获取延续：
 
 @interaction[
 #:eval cc-eval
@@ -236,7 +236,7 @@ represents a place to plug in a result value---because that was the
 expression context when @racket[save-it!] was called. The
 @tech{continuation} is encapsulated so that it behaves like the
 function @racket[(lambda (v) (+ 1 (+ 1 (+ 1 v))))]:}
-保存在@racket[save-k]中的@tech{延续（continuation）}封装程序上下文@racket[(+ 1 (+ 1 (+ 1 _?)))]，@racket[_?]代表插入结果值的位置——因为在@racket[save-it!]被调用时这是表达式上下文。@tech{延续（continuation）}被封装从而其行为类似于函数@racket[(lambda (v) (+ 1 (+ 1 (+ 1 v))))]：
+保存在@racket[save-k]中的@tech{延续}封装程序上下文@racket[(+ 1 (+ 1 (+ 1 _?)))]，@racket[_?]代表插入结果值的位置——因为在@racket[save-it!]被调用时这是表达式上下文。@tech{延续}被封装从而其行为类似于函数@racket[(lambda (v) (+ 1 (+ 1 (+ 1 v))))]：
 
 @interaction[
 #:eval cc-eval
@@ -248,7 +248,7 @@ function @racket[(lambda (v) (+ 1 (+ 1 (+ 1 v))))]:}
 @;{The continuation captured by
 @racket[call-with-composable-continuation] is determined dynamically,
 not syntactically. For example, with}
-通过@racket[call-with-composable-continuation]捕获延续是动态确定的，没有语法。例如，用
+通过@racket[call-with-composable-continuation]捕获的延续是动态确定的，没有语法。例如，用
 
 @interaction[
 #:eval cc-eval
@@ -284,13 +284,13 @@ program can introduce new delimiting prompts, and continuations as
 captured by @racket[call-with-composable-continuation] are sometimes
 called @deftech{composable continuations}, because they do not have a
 built-in @tech{abort}.}
-在Racket（或Scheme）中较传统的延续运算符是@racket[call-with-current-continuation]，它通常缩写为@racket[call/cc]。这是像@racket[call-with-composable-continuation]，但应用捕获的延续在还原保存的延续前首先@tech{中止（aborts）}（对于当前@tech{提示（prompt）}）。此外，Scheme系统传统上支持程序启动时的单个提示符，而不是通过@racket[call-with-continuation-prompt]允许新提示。在Racket中延续有时被称为@deftech{分隔的延续（delimited continuations）}，因为一个程序可以引入新定义的提示，并且作为@racket[call-with-composable-continuation]捕获的延续有时被称为@deftech{组合的延续（composable continuations）}，因为他们没有一个内置的@tech{中止（abort）}。
+在Racket（或Scheme）中较传统的延续运算符是@racket[call-with-current-continuation]，它通常缩写为@racket[call/cc]。这是像@racket[call-with-composable-continuation]，但应用捕获的延续在还原保存的延续前首先@tech{中止}（对于当前@tech{提示}）。此外，Scheme系统传统上支持程序启动时的单个提示符，而不是通过@racket[call-with-continuation-prompt]允许新提示。在Racket中延续有时被称为@deftech{分隔的延续（delimited continuations）}，因为一个程序可以引入新定义的提示，并且作为@racket[call-with-composable-continuation]捕获的延续有时被称为@deftech{组合的延续（composable continuations）}，因为他们没有一个内置的@tech{中止}。
 
 @;{For an example of how @tech{continuations} are useful, see
 @other-manual['(lib "scribblings/more/more.scrbl")]. For specific
 control operators that have more convenient names than the primitives
 described here, see @racketmodname[racket/control].}
-作为一个@tech{延续（continuations）}是多么有用的例子，请参见@other-manual['(lib "scribblings/more/more.scrbl")]。对于具体的控制操作符，它有比这里描述的原语更恰当的名字，请参见@racketmodname[racket/control]部分。
+作为一个@tech{延续}是多么有用的例子，请参见《 更多：用Racket进行系统编程（More: Systems Programming with Racket）》@;{@other-manual['(lib "scribblings/more/more.scrbl")]}。对于具体的控制操作符，它有比这里描述的原语更恰当的名字，请参见@racketmodname[racket/control]部分。
 
 @; ----------------------------------------------------------------------
 
