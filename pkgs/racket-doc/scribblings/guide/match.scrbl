@@ -49,7 +49,7 @@ fragments that it matched.}
 
 @;{Constructors like @racket[cons], @racket[list], and @racket[vector]
 can be used to create patterns that match pairs, lists, and vectors:}
-像@racket[cons]、@racket[list]和@racket[vector]这样的构造器，可以用于创建模式，以匹配pairs、lists和vectors：
+像@racket[cons]、@racket[list]和@racket[vector]这样的构造器，可以用于创建模式，以匹配配对、列表和向量：
 
 @interaction[
 #:eval match-eval
@@ -81,7 +81,7 @@ constructor:}
 variables} that are bound in the result expressions, except @racket[_],
 which does not bind (and thus is usually used as a catch-all):}
 不带引号的，在一个模式中的非构造器标识符是@tech{模式变量（pattern
-variables）}，它在结果表达式中被绑定，除了@racket[_]，它不绑定（因此，这通常是作为一个泛称）：
+variables）}，它在结果表达式中被绑定，除了@racket[_]，它不绑定（因此，这通常是作为一个泛称（笼统描述））：
 
 @interaction[
 #:eval match-eval
@@ -106,7 +106,7 @@ any number of times for any number of consecutive elements of the list
 or vector. If a sub-pattern followed by an ellipsis includes a pattern
 variable, the variable matches multiple times, and it is bound in the
 result expression to a list of matches:}
-一个省略号，写作@litchar{...}就像在一个列表或向量模式中的一个Kleene star：前面的子模式可以用于对列表或向量元素的任意数量的连续元素的任意次匹配。如果后跟省略号的子模式包含一个模式变量，这个变量会匹配多次，并在结果表达式里被绑定到一个匹配列表中：
+省略号，写作@litchar{...}，就像在列表或向量模式中的克莱尼星号（Kleene star）：前面的子模式可以用于对列表或向量元素的任意数量的连续元素的任意次匹配。如果后跟省略号的子模式包含一个模式变量，这个变量会匹配多次，并在结果表达式里被绑定到一个匹配列表中：
 
 @interaction[
 #:eval match-eval
@@ -124,7 +124,7 @@ result expression to a list of matches:}
 
 @;{Ellipses can be nested to match nested repetitions, and in that case,
 pattern variables can be bound to lists of lists of matches:}
-省略号可以嵌套以匹配嵌套的重复，在这种情况下，模式变量可以绑定到匹配列表中：
+省略号可以嵌套以匹配嵌套的重复，在这种情况下，模式变量可以绑定到匹配列表的列表中：
 
 @interaction[
 #:eval match-eval
@@ -135,19 +135,19 @@ pattern variables can be bound to lists of lists of matches:}
 @;{The @racket[quasiquote] form  (see @secref["qq"] for more about it) can also be used to build patterns.
 While unquoted portions of a normal quasiquoted form mean regular racket evaluation, here unquoted
 portions mean go back to regular pattern matching.}
-@racket[quasiquote]表（见《@secref["qq"]》获取更多关于它的信息）还可以用来建立模式。而一个通常的quasiquote表的unquoted部分意味着普通的racket求值，这里unquoted部分意味着回到普通模式匹配。
+@racket[quasiquote]表（见《@secref["qq"]》以获取更多关于它的信息）也可以用来建立模式。而一个通常的准引用（quasiquote）表的非引用部分意味着普通的racket求值，这里非引用部分意味着回到普通模式匹配。
 
 @;{So, in the example below, the with expression is the pattern and it gets rewritten into the
 application expression, using quasiquote as a pattern in the first instance and quasiquote
 to build an expression in the second.}
-因此，在下面的例子中，with表达模式是模式并且它被改写成应用表达式，在第一个例子里用quasiquote作为一个模式，在第二个例子里quasiquote构建一个表达式。
+因此，在下面的例子中，with表达模式是模式并且它被改写成应用表达式，在第一个实例里用准引用作为一个模式，在第二个实例里准引用构建一个表达式。
 
 @interaction[
 #:eval match-eval
 (match `{with {x 1} {+ x 1}}
   [`{with {,id ,rhs} ,body}
    `{{lambda {,id} ,body} ,rhs}])
-]
+ ]
 
 @;{For information on many more pattern forms, see @racketmodname[racket/match].}
 有关更多模式表的信息，请参见@racketmodname[racket/match]。
@@ -156,7 +156,7 @@ to build an expression in the second.}
 patterns in positions that otherwise must be identifiers. For example,
 @racket[match-let] generalizes @racket[let] to a @as-index{destructing
 bind}:}
-像@racket[match-let]表和@racket[match-lambda]表支持位置模式，否则必须是标识符。例如，@racket[match-let]概括@racket[let]给一个@as-index{破坏绑定（destructing
+像@racket[match-let]和@racket[match-lambda]的表支持位置模式，否则必须是标识符。例如，@racket[match-let]将@racket[let]归纳为@as-index{解构绑定（destructing
 bind）}：
 
 @interaction[
@@ -169,6 +169,6 @@ bind）}：
 有关这些附加表的信息，请参见@racketmodname[racket/match]。
 
 @;{@refdetails["match"]{pattern matching}}
-@refdetails["match"]{模式匹配}
+@;@refdetails["match"]{模式匹配}
 
 @close-eval[match-eval]
