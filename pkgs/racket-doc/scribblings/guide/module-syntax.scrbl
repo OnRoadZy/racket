@@ -150,7 +150,7 @@ the nested @racket[module] form declares a
 enclosing module using a quoted name. The following example prints
 @racket["Tony"] by importing @racket[tiger] from the @racket[zoo]
 submodule:}
-一个@racket[module]表可以被嵌套在一个模块内，在这种情况下，这个嵌套的@racket[module]表声明一个@deftech{子模块（submodule）}。子模块可以通过用一个引用名称的外围模块使直接引用。下面的例子通过从@racket[zoo]子模块输入@racket[tiger]打印@racket["Tony"]：
+一个@racket[module]表可以被嵌套在一个模块内，在这种情况下，这个嵌套的@racket[module]表声明一个@deftech{子模块（submodule）}。子模块可以被使用一个引用名称的外围模块直接引用。下面的例子通过从@racket[zoo]子模块输入@racket[tiger]打印@racket["Tony"]：
 
 @racketmod[
   #:file "park.rkt"
@@ -199,7 +199,7 @@ enclosing module:}
        @racket[require]d by its enclosing module, but the submodule
        cannot @racket[require] the enclosing module or lexically
        reference the enclosing module's bindings.}
-用@racket[module]申明的一个子模块模块可通过其外围模块@racket[require]，但这个子模块不能@racket[require]这个外围模块或在词法上参考外围模块的绑定。
+用@racket[module]申明的一个子模块模块可被其外围模块@racket[require]，但这个子模块不能@racket[require]这个外围模块或在词法上参考外围模块的绑定。
  }
 
  @item{
